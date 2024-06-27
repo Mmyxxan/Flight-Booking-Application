@@ -48,6 +48,7 @@
     </ImageView>
     <ImageButton
         android:id="@+id/nextButton"
+        android:background="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

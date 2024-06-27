@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.flightbookingapplication.IntroductionActivity;
 import com.example.flightbookingapplication.MainActivity;
 import com.example.flightbookingapplication.R;
+import com.example.flightbookingapplication.WelcomeActivity;
 
 public class IntroductionViewHolder extends RecyclerView.ViewHolder {
 
@@ -52,7 +53,7 @@ public class IntroductionViewHolder extends RecyclerView.ViewHolder {
             next_button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(view.getContext(), MainActivity.class);
+                    Intent intent = new Intent(view.getContext(), WelcomeActivity.class);
                     startActivity(view.getContext(), intent, null);
                 }
             });
