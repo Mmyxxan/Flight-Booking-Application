@@ -3,6 +3,7 @@ package com.example.flightbookingapplication.Fragments;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,9 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.flightbookingapplication.AvatarService.AvatarService;
 import com.example.flightbookingapplication.R;
+import com.google.android.material.textfield.TextInputEditText;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,11 +27,14 @@ import com.example.flightbookingapplication.R;
 public class ProfileFragment extends Fragment {
     private static final String PhoneArea = "+38";
 
+    private final AvatarService avatarService = new AvatarService();
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
 
     TextView name;
+    ImageView  avatar;
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
@@ -63,6 +70,12 @@ public class ProfileFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+    }
+
+    public void setAvatar() {
+        Bitmap userAvatar = avatarService.loadImageFromInternalStorage(getContext(), "avatar.png");
+        if (userAvatar != null) avatar.setImageBitmap(userAvatar);
+        else avatar.setImageResource(R.drawable.victoria);
     }
 
     public void setName(String first_name, String last_name) {
@@ -122,6 +135,9 @@ public class ProfileFragment extends Fragment {
             editor.apply();
         }
 
+        avatar = main_view.findViewById(R.id.avatar);
+        setAvatar();
+
         main_view.findViewById(R.id.personal).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -142,14 +158,14 @@ public class ProfileFragment extends Fragment {
 
                     @Override
                     public void onFragmentSaveChanges() {
-//                        EditText[] info = personalFragment.getInfo();
-//                        String first_name = info[0].getText().toString();
-//                        String last_name = info[1].getText().toString();
-//                        setName(first_name, last_name);
-//                        String phone_number = info[2].getText().toString();
-//                        setPhoneNumber(phone_number);
-//                        String email = info[3].getText().toString();
-//                        setEmail(email);
+                        TextInputEditText[] info = personalFragment.getInfo();
+                        String first_name = info[0].getText().toString();
+                        String last_name = info[1].getText().toString();
+                        setName(first_name, last_name);
+                        String phone_number = info[2].getText().toString();
+                        setPhoneNumber(phone_number);
+                        String email = info[3].getText().toString();
+                        setEmail(email);
                         onFragmentBack();
                     }
                 });

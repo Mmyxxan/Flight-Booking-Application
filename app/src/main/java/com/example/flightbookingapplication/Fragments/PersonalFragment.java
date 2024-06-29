@@ -1,15 +1,25 @@
 package com.example.flightbookingapplication.Fragments;
 
+import static android.app.Activity.RESULT_OK;
+
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 
+import com.example.flightbookingapplication.AvatarService.AvatarService;
 import com.example.flightbookingapplication.R;
+import com.google.android.material.textfield.TextInputEditText;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -17,10 +27,11 @@ import com.example.flightbookingapplication.R;
  * create an instance of this fragment.
  */
 public class PersonalFragment extends Fragment {
+    private ActivityResultLauncher<Intent> imagePickerLauncher;
 
     private static final String TAG = PersonalFragment.class.getSimpleName();
-    private EditText[] info;
-    public EditText[] getInfo() {
+    private final TextInputEditText[] info = new TextInputEditText[4];
+    public TextInputEditText[] getInfo() {
         return info;
     }
     public interface OnFragmentInteractionListener {
@@ -96,12 +107,55 @@ public class PersonalFragment extends Fragment {
             }
         });
 
+        info[0] = view.findViewById(R.id.first_name);
+        info[1] = view.findViewById(R.id.last_name);
+        info[2] = view.findViewById(R.id.phone_number);
+        info[3] = view.findViewById(R.id.email);
+        info[0].setText(mParam1);
+        info[1].setText(mParam2);
+        info[2].setText(mParam3);
+        info[3].setText(mParam4);
+
+        ImageView image_avatar = view.findViewById(R.id.avatar_image);
+        AvatarService avatarService = new AvatarService();
+        Bitmap userAvatar = avatarService.loadImageFromInternalStorage(getContext(), "avatar.png");
+        if (userAvatar != null) image_avatar.setImageBitmap(userAvatar);
+        else image_avatar.setImageResource(R.drawable.victoria);
+
+        ImageView change_avatar = view.findViewById(R.id.change_image);
+
+
+        imagePickerLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                        Uri imageUri = result.getData().getData();
+                        image_avatar.setImageURI(imageUri);
+                        // Handle the selected image here
+                        avatarService.saveImagePNGfromUri(getContext(), imageUri, "avatar_unsaved.png");
+                    }
+                }
+        );
+
+        change_avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                imagePickerLauncher.launch(intent);
+            }
+        });
+
         view.findViewById(R.id.save_changes).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                avatarService.copyImage(getContext(), "avatar_unsaved.png", "avatar.png");
                 mListener.onFragmentSaveChanges();
             }
         });
+
+
         return view;
     }
+
 }
