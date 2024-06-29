@@ -1,5 +1,6 @@
 package com.example.flightbookingapplication.IntroductionAdapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,11 +24,9 @@ public class IntroductionAdapter extends RecyclerView.Adapter<IntroductionViewHo
 
     @Override
     public void onBindViewHolder(@NonNull IntroductionViewHolder holder, int position) {
+        Log.d("TAG", "onBindViewHolder: " + position);
+//        recyclerView.setCurrentPosition(position);
         holder.bindView(position);
-        if (position != 2) {
-            recyclerView.setCurrentPosition(position);
-            holder.next_button.setOnClickListener(recyclerView);
-        }
     }
 
     public void setRecyclerView(CustomRecyclerView recyclerView) {

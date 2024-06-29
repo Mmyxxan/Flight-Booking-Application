@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/container"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#F5F5F5"
+    tools:context=".Fragments.ProfileFragment">
+
+    <ImageView
+        android:id="@+id/account_nav_bar"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/account_nav_bar"
+        android:layout_marginTop="16dp"
+        />
+    <ImageView
+        android:id="@+id/avatar"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/victoria"
+        android:layout_marginTop="60dp"
+        />
+    <TextView
+        android:id="@+id/name"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#050505"
+        android:textSize="18sp"
+        android:fontFamily="@font/edit_text"
+        android:layout_marginTop="170dp"
+        />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_marginTop="210dp"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/menu"
+        android:layout_width="match_parent"
+        android:layout_height="615dp">
+        <ImageView
+            android:id="@+id/personal"
+            android:layout_margin="25dp"
+            android:src="@drawable/personal_information"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </ImageView>
+        <ImageView
+            android:id="@+id/payment"
+            android:layout_margin="25dp"
+            android:src="@drawable/payment"
+            app:layout_constraintTop_toBottomOf="@id/personal"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </ImageView>
+        <ImageView
+            android:id="@+id/saved"
+            android:layout_margin="25dp"
+            android:src="@drawable/saved"
+            app:layout_constraintTop_toBottomOf="@id/payment"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </ImageView>
+        <ImageView
+            android:id="@+id/booking_history"
+            android:layout_margin="25dp"
+            android:src="@drawable/booking_history"
+            app:layout_constraintTop_toBottomOf="@id/saved"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </ImageView>
+        <ImageView
+            android:id="@+id/setting"
+            android:layout_margin="25dp"
+            android:src="@drawable/setting"
+            app:layout_constraintTop_toBottomOf="@id/booking_history"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </ImageView>
+        <ImageView
+            android:id="@+id/end_session"
+            android:layout_margin="15dp"
+            android:src="@drawable/end_session"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </ImageView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

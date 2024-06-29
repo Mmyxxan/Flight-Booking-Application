@@ -25,7 +25,7 @@ public class WelcomeActivity extends AppCompatActivity {
         });
 
         ImageButton login = this.findViewById(R.id.sign_in);
-        login.setOnClickListener(new View.OnClickListener() {
+        login.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);

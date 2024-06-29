@@ -3,8 +3,137 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    android:background="#F5F5F5"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
+    <ImageButton
+        android:id="@+id/back"
+        android:layout_margin="8dp"
+        android:src="@drawable/back"
+        android:background="#F5F5F5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </ImageButton>
+    <ImageView
+        android:id="@+id/welcome_back"
+        android:src="@drawable/welcome_back"
+        app:layout_constraintTop_toBottomOf="@id/back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="80dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </ImageView>
+    <EditText
+        android:layout_marginTop="30dp"
+        app:layout_constraintTop_toBottomOf="@id/welcome_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/emailEditText"
+        android:layout_width="380dp"
+        android:layout_height="70dp"
+        android:hint="Email"
+        style="@style/CustomEditText"/>
+
+    <EditText
+        app:layout_constraintTop_toBottomOf="@id/emailEditText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/passwordEditText"
+        android:layout_width="380dp"
+        android:layout_height="70dp"
+        android:hint="Password"
+        android:layout_marginTop="16dp"
+        style="@style/CustomEditText"/>
+    <ImageButton
+        android:id="@+id/signin"
+        android:background="#F5F5F5"
+        android:src="@drawable/sign_in"
+        android:layout_marginTop="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/passwordEditText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+    </ImageButton>
+    <ImageButton
+        android:layout_marginStart="34dp"
+        android:id="@+id/new_sign_up"
+        android:background="#F5F5F5"
+        android:src="@drawable/new_sign_up"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/signin"
+        app:layout_constraintStart_toStartOf="parent">
+
+    </ImageButton>
+    <ImageButton
+        android:layout_marginEnd="28dp"
+        android:id="@+id/forgot_password"
+        android:src="@drawable/forgot_password"
+        android:background="#F5F5F5"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="21dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/signin"
+        app:layout_constraintEnd_toEndOf="parent">
+
+    </ImageButton>
+    <ImageView
+        app:layout_constraintTop_toBottomOf="@id/new_sign_up"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="250dp"
+        android:id="@+id/or"
+        android:src="@drawable/or"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </ImageView>
+    <LinearLayout
+        android:id="@+id/social"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/or"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageButton
+            android:id="@+id/facebook"
+            android:layout_margin="8dp"
+            android:src="@drawable/facebook"
+            android:background="#F5F5F5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </ImageButton>
+        <ImageButton
+            android:id="@+id/google"
+            android:layout_margin="8dp"
+            android:src="@drawable/google"
+            android:background="#F5F5F5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </ImageButton>
+        <ImageButton
+            android:id="@+id/apple"
+            android:src="@drawable/apple"
+            android:layout_margin="8dp"
+            android:background="#F5F5F5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </ImageButton>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

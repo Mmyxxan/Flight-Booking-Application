@@ -6,6 +6,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".IntroductionActivity">
+    <LinearLayout
+        android:id="@+id/bar"
+        android:orientation="horizontal"
+        android:layout_marginTop="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/bar1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </ImageView>
+
+        <ImageView
+            android:id="@+id/bar2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </ImageView>
+
+        <ImageView
+            android:id="@+id/bar3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </ImageView>
+
+
+    </LinearLayout>
     <com.example.flightbookingapplication.CustomRecyclerView.IntroductionRecyclerView
         android:orientation="horizontal"
         android:id="@+id/introduction_recycler_view"
@@ -13,5 +45,17 @@
         android:layout_height="match_parent">
 
     </com.example.flightbookingapplication.CustomRecyclerView.IntroductionRecyclerView>
+
+    <ImageButton
+        android:id="@+id/nextButton"
+        android:background="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/next_button">
+
+    </ImageButton>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
