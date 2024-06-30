@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".BookingServiceFragment.FiltersFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/filters_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/back_button"
+            android:src="@drawable/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </ImageView>
+        <TextView
+            android:id="@+id/filters"
+            android:text="Filters"
+            android:fontFamily="@font/poppins"
+            android:textColor="#050505"
+            android:textSize="20sp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </TextView>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            app:layout_constraintTop_toBottomOf="@id/filters"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/departure_filter"
+            android:layout_width="match_parent"
+            android:layout_margin="20dp"
+            android:layout_height="wrap_content">
+            <TextView
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:id="@+id/departure_text"
+                android:text="Departure"
+                android:fontFamily="@font/poppins"
+                android:textColor="#050505"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </TextView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/departure_list"
+                app:layout_constraintStart_toStartOf="parent"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/departure_text"
+                android:layout_width="match_parent"
+                android:layout_height="55dp">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            app:layout_constraintTop_toBottomOf="@id/departure_filter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/arrival_filter"
+            android:layout_width="match_parent"
+            android:layout_margin="20dp"
+            android:layout_height="wrap_content">
+            <TextView
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:id="@+id/arrival_text"
+                android:text="Arrival"
+                android:fontFamily="@font/poppins"
+                android:textColor="#050505"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </TextView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/arrival_list"
+                app:layout_constraintStart_toStartOf="parent"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/arrival_text"
+                android:layout_width="match_parent"
+                android:layout_height="55dp">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/price_filter"
+            app:layout_constraintTop_toBottomOf="@id/arrival_filter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:id="@+id/price_text"
+                android:text="Price"
+                android:fontFamily="@font/poppins"
+                android:textColor="#050505"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </TextView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/sort_filter"
+            app:layout_constraintTop_toBottomOf="@id/price_filter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:id="@+id/sort_text"
+                android:text="Sort by"
+                android:fontFamily="@font/poppins"
+                android:textColor="#050505"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </TextView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/sort_list"
+                app:layout_constraintStart_toStartOf="parent"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/sort_text"
+                android:layout_width="match_parent"
+                android:layout_height="300dp">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:layout_margin="20dp"
+            android:id="@+id/reset_button"
+            android:src="@drawable/reset"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </ImageView>
+        <ImageView
+            android:layout_margin="20dp"
+            android:id="@+id/done_button"
+            android:src="@drawable/done"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </ImageView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

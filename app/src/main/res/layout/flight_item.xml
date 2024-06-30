@@ -1,0 +1,202 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="170dp" android:layout_width="match_parent"
+    android:background="#F0F0F0"
+    android:layout_margin="20dp">
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+
+        android:layout_height="match_parent"
+        android:background="@drawable/ticket_background"
+        android:padding="16dp">
+
+        <!-- Upper part containing flight details -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/origin_destination"
+            android:orientation="horizontal"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="8dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_from_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/edit_text"
+                    android:text="NYC"
+                    android:textSize="14sp"
+                    android:textColor="#01635D"/>
+                <TextView
+                    android:id="@+id/tv_from_city"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="New York"
+                    android:fontFamily="@font/edit_text"
+                    android:textSize="18sp"
+                    android:textColor="#050505"/>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_flight"
+                android:layout_marginHorizontal="8dp"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_marginStart="10dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="start">
+
+                <TextView
+                    android:id="@+id/tv_to_code"
+                    android:fontFamily="@font/edit_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LDN"
+                    android:textSize="14sp"
+                    android:textColor="#01635D"/>
+                <TextView
+                    android:id="@+id/tv_to_city"
+                    android:layout_width="wrap_content"
+                    android:fontFamily="@font/edit_text"
+                    android:layout_height="wrap_content"
+                    android:text="London"
+                    android:textSize="18sp"
+                    android:textColor="#050505"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Divider -->
+        <ImageView
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/divider"
+            android:layout_below="@id/origin_destination"
+            android:layout_marginVertical="8dp"/>
+
+        <!-- Lower part containing ticket details -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/divider">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/tv_date_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date"
+                    android:fontFamily="@font/edit_text"
+                    android:textColor="#01635D"
+                    android:textSize="12sp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="02 Jun"
+                    android:fontFamily="@font/edit_text"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/tv_departure_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Departure"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/edit_text"
+                    android:textColor="#01635D"/>
+
+                <TextView
+                    android:id="@+id/tv_departure"
+                    android:layout_width="wrap_content"
+                    android:fontFamily="@font/edit_text"
+                    android:layout_height="wrap_content"
+                    android:text="9:00 AM"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/tv_price_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Price"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/edit_text"
+                    android:textColor="#01635D"/>
+
+                <TextView
+                    android:id="@+id/tv_price"
+                    android:fontFamily="@font/edit_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$50"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/tv_number_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Number"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/edit_text"
+                    android:textColor="#01635D"/>
+
+                <TextView
+                    android:id="@+id/tv_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="NL-41"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/edit_text"
+                    android:textColor="@android:color/black"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

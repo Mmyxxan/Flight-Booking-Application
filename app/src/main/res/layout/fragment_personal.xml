@@ -57,7 +57,7 @@
         </FrameLayout>
         <com.example.flightbookingapplication.CustomTextInputLayout.CustomTextInputLayout
             android:layout_width="380dp"
-            android:layout_height="50dp"
+            android:layout_height="65dp"
             android:id="@+id/first_name_layout"
             app:layout_constraintTop_toBottomOf="@+id/profile_image"
             android:layout_margin="20dp"
@@ -76,7 +76,7 @@
         </com.example.flightbookingapplication.CustomTextInputLayout.CustomTextInputLayout>
         <com.example.flightbookingapplication.CustomTextInputLayout.CustomTextInputLayout
             android:layout_width="380dp"
-            android:layout_height="50dp"
+            android:layout_height="65dp"
             android:id="@+id/last_name_layout"
             app:layout_constraintTop_toBottomOf="@+id/first_name_layout"
             android:layout_margin="20dp"
@@ -96,7 +96,7 @@
 
         <com.example.flightbookingapplication.CustomTextInputLayout.CustomTextInputLayout
             android:layout_width="380dp"
-            android:layout_height="50dp"
+            android:layout_height="65dp"
             android:id="@+id/phone_number_layout"
             app:layout_constraintTop_toBottomOf="@+id/last_name_layout"
             android:layout_margin="20dp"
@@ -116,7 +116,7 @@
 
         <com.example.flightbookingapplication.CustomTextInputLayout.CustomTextInputLayout
             android:layout_width="380dp"
-            android:layout_height="50dp"
+            android:layout_height="65dp"
             android:id="@+id/email_layout"
             app:layout_constraintTop_toBottomOf="@+id/phone_number_layout"
             android:layout_margin="20dp"

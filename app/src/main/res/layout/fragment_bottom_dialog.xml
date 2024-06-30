@@ -34,7 +34,7 @@
             android:id="@+id/search_text"
             android:layout_width="wrap_content"
             android:padding="1dp"
-            android:fontFamily="fonts/Montserrat-Regular.ttf"
+            android:fontFamily="@font/edit_text"
             android:textColor="#AAAAAA"
             android:layout_marginStart="12dp"
             android:paddingBottom="15dp"

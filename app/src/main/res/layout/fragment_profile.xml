@@ -31,8 +31,8 @@
         android:layout_height="wrap_content"
         android:textColor="#050505"
         android:textSize="18sp"
-        android:fontFamily="@font/edit_text"
-        android:layout_marginTop="170dp"
+        android:fontFamily="@font/poppins"
+        android:layout_marginTop="165dp"
         />
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_marginTop="210dp"

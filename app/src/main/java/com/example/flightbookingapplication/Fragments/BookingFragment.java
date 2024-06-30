@@ -3,14 +3,18 @@ package com.example.flightbookingapplication.Fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.flightbookingapplication.FragmentBookingRecyclerViewAdapter.BookingAdapter;
 import com.example.flightbookingapplication.R;
@@ -22,6 +26,8 @@ import com.example.flightbookingapplication.R;
  */
 public class BookingFragment extends Fragment {
 
+    // use back stack or for every fragment, manage its child fragment like done in this fragment
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -29,14 +35,81 @@ public class BookingFragment extends Fragment {
 
     private static final String ARG_PARAM3 = "param3";
 
+    RecyclerView booking_list;
+    ImageView booking_nav_bar;
+
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     private int mParam3;
 
+    public void hideViews() {
+        booking_nav_bar.setVisibility(View.GONE);
+        booking_list.setVisibility(View.GONE);
+    }
+
+    public void showViews() {
+        booking_nav_bar.setVisibility(View.VISIBLE);
+        booking_list.setVisibility(View.VISIBLE);
+    }
+
+    public void showFragment(Fragment fragment) {
+        hideViews();
+        getChildFragmentManager().beginTransaction().replace(R.id.booking_fragment, fragment).commit();
+    }
+
+    public void removeFragment(Fragment fragment) {
+        getChildFragmentManager().beginTransaction().remove(fragment).commit();
+        showViews();
+    }
+
     public BookingFragment() {
         // Required empty public constructor
+    }
+
+    public void addFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getChildFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.booking_fragment, fragment);
+        fragmentTransaction.commit();
+    }
+
+    public void popBackFragment(String previousFragmentCLassName) {
+//        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentManager fragmentManager = getChildFragmentManager();
+        fragmentManager.popBackStack();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        Fragment previousFragment = fragmentManager.findFragmentByTag(previousFragmentCLassName);
+        assert previousFragment != null;
+        fragmentTransaction.show(previousFragment);
+        fragmentTransaction.commit();
+    }
+
+    public void switchFragment(String fragmentClassName) {
+        FragmentManager fragmentManager = getChildFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        //Hide all current fragment
+        for (Fragment fragment : fragmentManager.getFragments()) {
+            fragmentTransaction.hide(fragment);
+        }
+
+        Fragment targetFragment = fragmentManager.findFragmentByTag(fragmentClassName);
+        if (targetFragment == null) {
+            try{
+                //this method should include handling exception
+                targetFragment = (Fragment)Class.forName(fragmentClassName).newInstance();
+                fragmentTransaction.add(R.id.booking_fragment, targetFragment, fragmentClassName);
+            }
+            catch (ClassNotFoundException | IllegalAccessException | InstantiationException | java.lang.InstantiationException e) {
+                Log.e("MainActivity", "Error instantiating fragment", e);
+            }
+        } else {
+            fragmentTransaction.show(targetFragment);
+        }
+        fragmentTransaction.commit();
     }
 
     /**
@@ -74,11 +147,12 @@ public class BookingFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_booking, container, false);
-        RecyclerView booking_list = view.findViewById(R.id.booking_list);
+        booking_list = view.findViewById(R.id.booking_list);
 //        SnapHelper snapHelper = new LinearSnapHelper();
         booking_list.setAdapter(new BookingAdapter());
         booking_list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         booking_list.scrollToPosition(mParam3);
+        booking_nav_bar = view.findViewById(R.id.booking_nav_bar);
 //        snapHelper.attachToRecyclerView(booking_list);
         return view;
     }

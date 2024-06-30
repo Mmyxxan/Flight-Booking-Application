@@ -35,6 +35,8 @@ public class ProfileFragment extends Fragment {
 
     TextView name;
     ImageView  avatar;
+    String first_name, last_name, phone_number, email;
+
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
@@ -80,6 +82,8 @@ public class ProfileFragment extends Fragment {
 
     public void setName(String first_name, String last_name) {
         this.name.setText(first_name + " " + last_name);
+        this.first_name = first_name;
+        this.last_name = last_name;
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(String.valueOf(R.string.preferences), MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(String.valueOf(R.string.first_name), first_name);
@@ -88,6 +92,7 @@ public class ProfileFragment extends Fragment {
     }
 
     public void setPhoneNumber(String phone_number) {
+        this.phone_number = phone_number;
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(String.valueOf(R.string.preferences), MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(String.valueOf(R.string.phone), phone_number);
@@ -95,6 +100,7 @@ public class ProfileFragment extends Fragment {
     }
 
     public void setEmail(String email) {
+        this.email = email;
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(String.valueOf(R.string.preferences), MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(String.valueOf(R.string.email), email);
@@ -111,8 +117,8 @@ public class ProfileFragment extends Fragment {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(String.valueOf(R.string.preferences), MODE_PRIVATE);
 
         // Retrieve the name from SharedPreferences
-        String first_name = sharedPreferences.getString(String.valueOf(R.string.first_name), "Victoria");
-        String last_name = sharedPreferences.getString(String.valueOf(R.string.last_name), "Yoker");
+        first_name = sharedPreferences.getString(String.valueOf(R.string.first_name), "Victoria");
+        last_name = sharedPreferences.getString(String.valueOf(R.string.last_name), "Yoker");
         String storedName = first_name + " " + last_name;
         if (storedName.equals("Victoria Yoker")) {
             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -122,13 +128,13 @@ public class ProfileFragment extends Fragment {
         }
         name.setText(storedName);
 
-        String phone_number = sharedPreferences.getString(String.valueOf(R.string.phone), "0123456789");
+        phone_number = sharedPreferences.getString(String.valueOf(R.string.phone), "0123456789");
         if (phone_number.equals("0123456789")) {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString(String.valueOf(R.string.phone), "0123456789");
             editor.apply();
         }
-        String email = sharedPreferences.getString(String.valueOf(R.string.email), "victoria.yoker@gmail.com");
+        email = sharedPreferences.getString(String.valueOf(R.string.email), "victoria.yoker@gmail.com");
         if (email.equals("victoria.yoker@gmail.com")) {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString(String.valueOf(R.string.email), "victoria.yoker@gmail.com");

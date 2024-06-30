@@ -27,7 +27,14 @@
         <item name="behavior_peekHeight">300dp</item>
         <item name="behavior_draggable">true</item>
     </style>
-
+    <style name="UnselectedFilter" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">#089083</item>
+        <item name="android:background">@drawable/economy_background</item>
+    </style>
+    <style name="SelectedFilter" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:background">@drawable/class_background</item>
+    </style>
 
 
 </resources>
