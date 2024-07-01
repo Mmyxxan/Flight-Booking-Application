@@ -2,6 +2,7 @@ package com.example.flightbookingapplication.Fragments;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 
 import com.example.flightbookingapplication.AvatarService.AvatarService;
 import com.example.flightbookingapplication.R;
+import com.example.flightbookingapplication.UserInformation;
 import com.google.android.material.textfield.TextInputEditText;
 
 /**
@@ -104,6 +106,9 @@ public class ProfileFragment extends Fragment {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(String.valueOf(R.string.preferences), MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(String.valueOf(R.string.email), email);
+//        Intent intent = new Intent();
+//        UserInformation userInformation = new UserInformation("mao", "", "");
+//        intent.putExtra("user information", userInformation);
         editor.apply();
     }
 

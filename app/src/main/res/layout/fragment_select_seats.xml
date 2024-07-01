@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="#F5F5F5"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".BookingServiceFragment.SelectSeatsFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/select_seats_fragments"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/back_button"
+            android:src="@drawable/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </ImageView>
+        <TextView
+            android:id="@+id/select_seats"
+            android:text="Select Seats"
+            android:fontFamily="@font/poppins"
+            android:textColor="#050505"
+            android:textSize="20sp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </TextView>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/traveller"
+            app:layout_constraintTop_toBottomOf="@id/select_seats"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:id="@+id/traveller_text"
+                android:layout_margin="20dp"
+                android:text="Traveller"
+                android:fontFamily="@font/edit_text"
+                android:textColor="#050505"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </TextView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/traveller_list"
+                app:layout_constraintStart_toStartOf="parent"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/traveller_text"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            app:layout_constraintTop_toBottomOf="@id/traveller"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="4dp"
+            android:id="@+id/status"
+            android:src="@drawable/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </ImageView>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/seats"
+            android:layout_marginTop="25dp"
+            app:layout_constraintTop_toBottomOf="@id/status"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="350dp">
+            <ImageView
+                android:id="@+id/numbers"
+                android:src="@drawable/numbers"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp">
+
+            </ImageView>
+            <LinearLayout
+                app:layout_constraintStart_toStartOf="parent"
+                android:orientation="horizontal"
+                android:gravity="center"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/numbers"
+                android:layout_width="150dp"
+                android:layout_height="50dp">
+                <TextView
+                    android:id="@+id/letter_a"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/semi_bold"
+                    android:textColor="#050505"
+                    android:text="A"
+                    android:textSize="24sp"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/letter_b"
+                    android:fontFamily="@font/semi_bold"
+                    android:textColor="#050505"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="B"
+                    android:textSize="24sp"
+                    android:gravity="center"/>
+
+            </LinearLayout>
+            <LinearLayout
+                app:layout_constraintStart_toEndOf="@id/numbers"
+                android:orientation="horizontal"
+                android:gravity="center"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="150dp"
+                android:layout_height="50dp">
+                <TextView
+                    android:id="@+id/letter_c"
+                    android:layout_width="0dp"
+                    android:fontFamily="@font/semi_bold"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="#050505"
+                    android:text="C"
+                    android:textSize="24sp"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/letter_d"
+                    android:layout_width="0dp"
+                    android:textColor="#050505"
+                    android:fontFamily="@font/semi_bold"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="D"
+                    android:textSize="24sp"
+                    android:gravity="center"/>
+
+            </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/seat_rows"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/numbers"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="300dp">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            app:layout_constraintTop_toBottomOf="@id/seats"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/confirm"
+            android:background="@drawable/bottom_navigation_view_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_margin="20dp"
+                android:paddingLeft="15dp"
+                android:text="Your seats"
+                android:id="@+id/your_seats"
+                android:fontFamily="@font/medium"
+                android:textColor="#01635D"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </TextView>
+            <TextView
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/your_seats"
+                android:layout_margin="20dp"
+                android:paddingLeft="15dp"
+                android:text="Total price"
+                android:id="@+id/total_price"
+                android:fontFamily="@font/medium"
+                android:textColor="#01635D"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </TextView>
+            <TextView
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_margin="20dp"
+                android:paddingRight="15dp"
+                android:text="Traveller 1 / Seat 2A"
+                android:id="@+id/traveller_seat_number"
+                android:fontFamily="@font/semi_bold"
+                android:textColor="#050505"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </TextView>
+            <TextView
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/traveller_seat_number"
+                android:layout_margin="20dp"
+                android:paddingRight="15dp"
+                android:text="$50.00"
+                android:id="@+id/dollar"
+                android:fontFamily="@font/semi_bold"
+                android:textColor="#050505"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </TextView>
+            <ImageView
+                android:id="@+id/continue_button"
+                android:layout_margin="20dp"
+                android:src="@drawable/continue_button"
+                app:layout_constraintTop_toBottomOf="@id/total_price"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </ImageView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
