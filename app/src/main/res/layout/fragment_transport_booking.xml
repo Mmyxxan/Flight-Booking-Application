@@ -149,28 +149,45 @@
             app:layout_constraintTop_toBottomOf="@id/passenger_luggage_text"
             android:layout_margin="20dp"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_width="70dp"
+            android:layout_width="80dp"
             app:startIconDrawable="@drawable/passenger"
             android:layout_height="45dp">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
+                android:background="#FFFFFF"
+                android:textColor="#01635D"
+                android:fontFamily="@font/medium"
+                android:textDirection="anyRtl"
+                android:inputType="number"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:padding="0dp"
                 android:id="@+id/passenger_edit_text"
                 android:layout_height="match_parent">
+        </com.google.android.material.textfield.TextInputEditText>
 
-            </com.google.android.material.textfield.TextInputEditText>
+    </com.google.android.material.textfield.TextInputLayout>
 
-        </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/baby_text"
             app:layout_constraintTop_toBottomOf="@id/passenger_luggage_text"
             android:layout_margin="20dp"
             app:layout_constraintStart_toEndOf="@id/passenger_text"
-            android:layout_width="70dp"
+            android:layout_width="80dp"
             app:startIconDrawable="@drawable/baby"
             android:layout_height="45dp">
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:id="@+id/baby_edit_text"
+                android:background="#FFFFFF"
+                android:textColor="#01635D"
+                android:fontFamily="@font/medium"
+                android:textDirection="anyRtl"
+                android:inputType="number"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:padding="0dp"
                 android:layout_height="match_parent">
 
             </com.google.android.material.textfield.TextInputEditText>
@@ -181,12 +198,20 @@
             app:layout_constraintTop_toBottomOf="@id/passenger_luggage_text"
             android:layout_margin="20dp"
             app:layout_constraintStart_toEndOf="@id/baby_text"
-            android:layout_width="70dp"
+            android:layout_width="80dp"
             app:startIconDrawable="@drawable/dog"
             android:layout_height="45dp">
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:id="@+id/dog_edit_text"
+                android:textColor="#01635D"
+                android:fontFamily="@font/medium"
+                android:textDirection="anyRtl"
+                android:inputType="number"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:padding="0dp"
+                android:background="#FFFFFF"
                 android:layout_height="match_parent">
 
             </com.google.android.material.textfield.TextInputEditText>
@@ -197,11 +222,19 @@
             app:layout_constraintTop_toBottomOf="@id/passenger_luggage_text"
             android:layout_margin="20dp"
             app:layout_constraintStart_toEndOf="@id/dog_text"
-            android:layout_width="70dp"
+            android:layout_width="80dp"
             app:startIconDrawable="@drawable/dog"
             android:layout_height="45dp">
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
+                android:background="#FFFFFF"
+                android:textColor="#01635D"
+                android:fontFamily="@font/medium"
+                android:textDirection="anyRtl"
+                android:inputType="number"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:padding="0dp"
                 android:id="@+id/luggage_edit_text"
                 android:layout_height="match_parent">
 
@@ -233,9 +266,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/class_text"
                 android:text="Economy"
-                android:textColor="#089083"
+                style="@style/UnselectedFilter"
                 android:layout_marginTop="6dp"
-                android:background="@drawable/economy_background"
                 android:padding="7dp"
                 android:fontFamily="@font/semi_bold"
                 android:id="@+id/economy"
@@ -251,11 +283,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="28dp"
                 android:layout_marginTop="6dp"
-                android:background="@drawable/class_background"
+                style="@style/SelectedFilter"
                 android:fontFamily="@font/semi_bold"
                 android:padding="7dp"
                 android:text="Business"
-                android:textColor="#FFFFFF"
                 app:layout_constraintStart_toEndOf="@id/economy"
                 app:layout_constraintTop_toBottomOf="@id/class_text">
 

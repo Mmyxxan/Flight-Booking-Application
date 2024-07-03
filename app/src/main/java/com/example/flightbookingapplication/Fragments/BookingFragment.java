@@ -16,7 +16,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.flightbookingapplication.BookingServiceFragment.TransportBookingFragment;
 import com.example.flightbookingapplication.FragmentBookingRecyclerViewAdapter.BookingAdapter;
+import com.example.flightbookingapplication.FragmentBookingRecyclerViewAdapter.BookingViewHolder;
 import com.example.flightbookingapplication.R;
 
 /**
@@ -24,7 +26,7 @@ import com.example.flightbookingapplication.R;
  * Use the {@link BookingFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BookingFragment extends Fragment {
+public class BookingFragment extends Fragment implements BookingViewHolder.OnItemClickListener {
 
     // use back stack or for every fragment, manage its child fragment like done in this fragment
 
@@ -149,11 +151,20 @@ public class BookingFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_booking, container, false);
         booking_list = view.findViewById(R.id.booking_list);
 //        SnapHelper snapHelper = new LinearSnapHelper();
-        booking_list.setAdapter(new BookingAdapter());
+        booking_list.setAdapter(new BookingAdapter(this));
         booking_list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         booking_list.scrollToPosition(mParam3);
         booking_nav_bar = view.findViewById(R.id.booking_nav_bar);
 //        snapHelper.attachToRecyclerView(booking_list);
         return view;
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Log.d("MainActivity", "onItemClick: " + position);
+        if (position == 2) {
+            hideViews();
+            getChildFragmentManager().beginTransaction().replace(R.id.booking_fragment, new TransportBookingFragment()).commit();
+        }
     }
 }

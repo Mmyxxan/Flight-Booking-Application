@@ -1,6 +1,9 @@
 package com.example.flightbookingapplication.FlightModel;
 
-public class FlightSeat {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class FlightSeat implements Parcelable {
     private int seatNumber;
     private boolean isAvailable;
     private int seatType;
@@ -12,7 +15,40 @@ public class FlightSeat {
         this.price = price;
         this.isAvailable = true;
     }
-    // create setter, getter methods
+
+    protected FlightSeat(Parcel in) {
+        seatNumber = in.readInt();
+        isAvailable = in.readByte() != 0;
+        seatType = in.readInt();
+        price = in.readInt();
+    }
+
+    public static final Creator<FlightSeat> CREATOR = new Creator<FlightSeat>() {
+        @Override
+        public FlightSeat createFromParcel(Parcel in) {
+            return new FlightSeat(in);
+        }
+
+        @Override
+        public FlightSeat[] newArray(int size) {
+            return new FlightSeat[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(seatNumber);
+        dest.writeByte((byte) (isAvailable ? 1 : 0));
+        dest.writeInt(seatType);
+        dest.writeInt(price);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    // Setter and getter methods
     public void setSeatNumber(int seatNumber) {
         this.seatNumber = seatNumber;
     }
@@ -41,5 +77,7 @@ public class FlightSeat {
         this.price = price;
     }
 
-
+    public int getPrice() {
+        return price;
+    }
 }

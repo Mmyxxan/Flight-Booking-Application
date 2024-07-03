@@ -10,11 +10,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.flightbookingapplication.R;
 
 public class BookingAdapter extends RecyclerView.Adapter<BookingViewHolder> {
+    BookingViewHolder.OnItemClickListener listener;
+    public BookingAdapter(BookingViewHolder.OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
     @NonNull
     @Override
     public BookingViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.booking_item, parent, false);
-        return new BookingViewHolder(view);
+        BookingViewHolder bookingViewHolder = new BookingViewHolder(view);
+        bookingViewHolder.setOnItemClickListener(listener);
+        return bookingViewHolder;
     }
 
     @Override

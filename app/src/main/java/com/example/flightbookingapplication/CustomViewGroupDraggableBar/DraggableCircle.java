@@ -17,7 +17,7 @@ public class DraggableCircle extends View {
     private int frameColor = Color.parseColor("#B7DFDB");
     private int selectFrameColor = Color.parseColor("#089083");
     private Paint paint;
-    private float circleRadius = 30;
+    private float circleRadius = 25;
     private float cx1, cy1;
     private float cx2, cy2;
     private float lastX1, lastY1;
