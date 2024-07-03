@@ -159,12 +159,24 @@ public class BookingFragment extends Fragment implements BookingViewHolder.OnIte
         return view;
     }
 
+    private void checkAndFillDate() {
+
+    }
+
     @Override
     public void onItemClick(int position) {
         Log.d("MainActivity", "onItemClick: " + position);
         if (position == 2) {
             hideViews();
-            getChildFragmentManager().beginTransaction().replace(R.id.booking_fragment, new TransportBookingFragment()).commit();
+            TransportBookingFragment transportBookingFragment = new TransportBookingFragment();
+            transportBookingFragment.setOnBackButtonPressedListener(new TransportBookingFragment.OnBacKPressed() {
+                @Override
+                public void onBackButtonPressed() {
+                    getChildFragmentManager().popBackStack();
+                    showViews();
+                }
+            });
+            getChildFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.booking_fragment, transportBookingFragment).commit();
         }
     }
 }

@@ -3,6 +3,7 @@ package com.example.flightbookingapplication.BookingServiceFragment;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,7 @@ import android.widget.TextView;
 
 import com.example.flightbookingapplication.FlightModel.Flight;
 import com.example.flightbookingapplication.R;
+import com.example.flightbookingapplication.UserFlightInformation;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.time.LocalDate;
@@ -33,8 +36,19 @@ import java.util.Objects;
  * create an instance of this fragment.
  */
 public class TransportBookingFragment extends Fragment {
-    private TextInputEditText origin, destination, departure_date, return_date;
+
+    public interface OnBacKPressed {
+        void onBackButtonPressed();
+    }
+    private OnBacKPressed backPressedListener;
+    public void setOnBackButtonPressedListener(OnBacKPressed listener) {
+        backPressedListener = listener;
+    }
+    private TextInputEditText origin, destination, departure_date, return_date, passenger, baby, dog, luggage;
+    int class_type = 0, transport_type = 0;
+    private ImageView back;
     private TextView economy, business;
+    private ImageView plane, ship, train, bus;
     DatePickerDialog.OnDateSetListener dateSetListener;
 
     DatePickerDialog datePickerDialog;
@@ -86,17 +100,60 @@ public class TransportBookingFragment extends Fragment {
             economy.setTextColor(Color.parseColor("#FFFFFF"));
             business.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.economy_background));
             business.setTextColor(Color.parseColor("#089083"));
+            class_type = 0;
         } else if (position == 1) {
             business.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.class_background));
             business.setTextColor(Color.parseColor("#FFFFFF"));
             economy.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.economy_background));
             economy.setTextColor(Color.parseColor("#089083"));
+            class_type = 1;
         }
     }
 
     public void setTransport(int position) {
         if (position == 0) {
-
+            plane.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.white_transport));
+            ship.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.green_transport1));
+            train.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.green_transport2));
+            bus.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.green_transport3));
+            plane.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.class_background));
+            ship.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.economy_background));
+            train.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.economy_background));
+            bus.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.economy_background));
+            transport_type = 0;
+        }
+        else if (position == 1) {
+            plane.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.green_transport));
+            ship.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.white_transport1));
+            train.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.green_transport2));
+            bus.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.green_transport3));
+            plane.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.economy_background));
+            ship.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.class_background));
+            train.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.economy_background));
+            bus.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.economy_background));
+            transport_type = 1;
+        }
+        else if (position == 2) {
+            plane.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.green_transport));
+            ship.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.green_transport1));
+            train.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.white_transport2));
+            bus.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.green_transport3));
+            plane.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.economy_background));
+            ship.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.economy_background));
+            train.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.class_background));
+            bus.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.economy_background));
+            transport_type = 2;
+        }
+        else if (position == 3) {
+            plane.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.green_transport));
+            ship.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.green_transport1));
+            train.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.green_transport2));
+            bus.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.white_transport3));
+            plane.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.economy_background));
+            ship.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.economy_background));
+            train.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.economy_background));
+            bus.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.class_background));
+            transport_type = 3;
         }
     }
 
@@ -149,7 +206,7 @@ public class TransportBookingFragment extends Fragment {
                         return_date.setText("");
                         return_date.clearFocus();
                     }
-                    else departure_date.setError(null);
+                    else return_date.setError(null);
                 }
             }
         };
@@ -171,12 +228,12 @@ public class TransportBookingFragment extends Fragment {
         destination = view.findViewById(R.id.to);
         origin.setOnFocusChangeListener((origin, hasFocus) -> {
             if (!hasFocus) {
-                validateAndSetEditTextValue();
+                validateAndSetEditTextValue((TextInputEditText) origin);
             }
         });
         destination.setOnFocusChangeListener((destination, hasFocus) -> {
             if (!hasFocus) {
-                validateAndSetEditTextValue();
+                validateAndSetEditTextValue((TextInputEditText) destination);
             }
         });
         ImageView convert = view.findViewById(R.id.convert);
@@ -206,10 +263,62 @@ public class TransportBookingFragment extends Fragment {
             }
         });
 
+        plane = view.findViewById(R.id.plane);
+        ship = view.findViewById(R.id.ship);
+        train = view.findViewById(R.id.train);
+        bus = view.findViewById(R.id.bus);
+
+        plane.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setTransport(0);
+            }
+        });
+        ship.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setTransport(1);
+            }
+        });
+        train.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setTransport(2);
+            }
+        });
+        bus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setTransport(3);
+            }
+        });
+        back = view.findViewById(R.id.back_button);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("Back", "Back button pressed");
+                if (backPressedListener != null) {
+                    backPressedListener.onBackButtonPressed();
+                }
+            }
+        });
+        passenger = view.findViewById(R.id.passenger_edit_text);
+        baby = view.findViewById(R.id.baby_edit_text);
+        dog = view.findViewById(R.id.dog_edit_text);
+        luggage = view.findViewById(R.id.luggage_edit_text);
+
+        ImageView search = view.findViewById(R.id.search_flight);
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navigateToFlights();
+            }
+        });
+
         return view;
     }
 
-    private void validateAndSetEditTextValue() {
+    private void validateAndSetEditTextValue(TextInputEditText origin) {
         String userInput = origin.getText().toString().trim();
 
         if (TextUtils.isEmpty(userInput)) {
@@ -233,6 +342,36 @@ public class TransportBookingFragment extends Fragment {
 
         // Set the validated or default value to the EditText
         origin.setText(userInput + " (" + Flight.abbreviated_city(userInput) + ")");
+    }
+
+    private void navigateToFlights() {
+        String origin = this.origin.getText().toString().trim();
+        String destination = this.destination.getText().toString().trim();
+        String departureDate = this.departure_date.getText().toString().trim();
+        String returnDate = this.return_date.getText().toString().trim();
+        String passenger = this.passenger.getText().toString().trim();
+        String baby = this.baby.getText().toString().trim();
+        String dog = this.dog.getText().toString().trim();
+        String luggage = this.luggage.getText().toString().trim();
+        int class_type = this.class_type;
+        int transport_type = this.transport_type;
+
+        // Extract city names from the origin and destination strings
+        origin = extractCityName(origin).trim();
+        destination = extractCityName(destination).trim();
+
+        UserFlightInformation userFlightInformation = new UserFlightInformation(
+                origin, destination, departureDate, returnDate, passenger, baby, dog, luggage, class_type, transport_type
+        );
+
+//        Intent intent = new Intent(getActivity(), YourTargetActivity.class);
+//        intent.putExtra("userFlightInformation", userFlightInformation);
+//        startActivity(intent);
+
+    }
+    private String extractCityName(String text) {
+        // Use regular expression to extract the city name (everything before the first parenthesis)
+        return text.replaceAll(" \\(.*\\)$", "");
     }
 
     private void showOptionsDialog() {
