@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class UserFlightInformation implements Parcelable {
+    // Attributes
     private String origin;
     private String destination;
     private String departureDate;
@@ -14,10 +15,12 @@ public class UserFlightInformation implements Parcelable {
     private String luggage;
     private int classType;
     private int transportType;
+    private String dayOfWeek;
 
+    // Constructor
     public UserFlightInformation(String origin, String destination, String departureDate, String returnDate,
                                  String passenger, String baby, String dog, String luggage,
-                                 int classType, int transportType) {
+                                 int classType, int transportType, String dayOfWeek) {
         this.origin = origin;
         this.destination = destination;
         this.departureDate = departureDate;
@@ -28,8 +31,10 @@ public class UserFlightInformation implements Parcelable {
         this.luggage = luggage;
         this.classType = classType;
         this.transportType = transportType;
+        this.dayOfWeek = dayOfWeek;
     }
 
+    // Parcelable implementation
     protected UserFlightInformation(Parcel in) {
         origin = in.readString();
         destination = in.readString();
@@ -41,6 +46,7 @@ public class UserFlightInformation implements Parcelable {
         luggage = in.readString();
         classType = in.readInt();
         transportType = in.readInt();
+        dayOfWeek = in.readString();
     }
 
     public static final Creator<UserFlightInformation> CREATOR = new Creator<UserFlightInformation>() {
@@ -72,10 +78,10 @@ public class UserFlightInformation implements Parcelable {
         dest.writeString(luggage);
         dest.writeInt(classType);
         dest.writeInt(transportType);
+        dest.writeString(dayOfWeek);
     }
 
     // Getters and Setters
-
     public String getOrigin() {
         return origin;
     }
@@ -154,5 +160,13 @@ public class UserFlightInformation implements Parcelable {
 
     public void setTransportType(int transportType) {
         this.transportType = transportType;
+    }
+
+    public String getDayOfWeek() {
+        return dayOfWeek;
+    }
+
+    public void setDayOfWeek(String dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
     }
 }

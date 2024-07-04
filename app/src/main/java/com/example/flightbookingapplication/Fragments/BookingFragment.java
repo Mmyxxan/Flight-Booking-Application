@@ -159,10 +159,6 @@ public class BookingFragment extends Fragment implements BookingViewHolder.OnIte
         return view;
     }
 
-    private void checkAndFillDate() {
-
-    }
-
     @Override
     public void onItemClick(int position) {
         Log.d("MainActivity", "onItemClick: " + position);

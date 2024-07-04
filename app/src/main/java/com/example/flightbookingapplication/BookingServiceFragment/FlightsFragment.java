@@ -1,12 +1,16 @@
 package com.example.flightbookingapplication.BookingServiceFragment;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.flightbookingapplication.R;
 
@@ -16,6 +20,15 @@ import com.example.flightbookingapplication.R;
  * create an instance of this fragment.
  */
 public class FlightsFragment extends Fragment {
+    private RecyclerView calendarList, flightsList;
+    private TextView numFlights;
+    public interface setUpSpaceForFlightsFragment {
+        void setUpSpaceForFlightsFragment();
+    }
+    private setUpSpaceForFlightsFragment mListener;
+    public void setListener(setUpSpaceForFlightsFragment listener) {
+        mListener = listener;
+    }
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,6 +41,13 @@ public class FlightsFragment extends Fragment {
 
     public FlightsFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mListener = (setUpSpaceForFlightsFragment) context;
+        mListener.setUpSpaceForFlightsFragment();
     }
 
     /**
@@ -61,6 +81,10 @@ public class FlightsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_flights, container, false);
+        View view = inflater.inflate(R.layout.fragment_flights, container, false);
+        calendarList = view.findViewById(R.id.flights_recycler_view);
+        flightsList = view.findViewById(R.id.flights_list);
+        numFlights = view.findViewById(R.id.num_flights);
+        return view;
     }
 }

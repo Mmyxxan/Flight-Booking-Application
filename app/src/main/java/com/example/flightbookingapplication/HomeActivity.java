@@ -7,10 +7,14 @@ import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.flightbookingapplication.BookingServiceFragment.FlightsFragment;
+import com.example.flightbookingapplication.BookingServiceFragment.TransportBookingFragment;
 import com.example.flightbookingapplication.CustomDialog.CustomDialog;
 import com.example.flightbookingapplication.Fragments.BookingFragment;
 import com.example.flightbookingapplication.Fragments.HomeFragment;
@@ -18,7 +22,7 @@ import com.example.flightbookingapplication.Fragments.NotificationFragment;
 import com.example.flightbookingapplication.Fragments.ProfileFragment;
 import com.google.android.material.textfield.TextInputEditText;
 
-public class HomeActivity extends AppCompatActivity implements HomeFragment.onFragmentInteractionListener {
+public class HomeActivity extends AppCompatActivity implements HomeFragment.onFragmentInteractionListener, FlightsFragment.setUpSpaceForFlightsFragment, TransportBookingFragment.restoreBottomNavigationBar {
     FrameLayout frameLayout;
     ImageView home, booking, noti, profile;
 
@@ -172,5 +176,37 @@ public class HomeActivity extends AppCompatActivity implements HomeFragment.onFr
         currentPosition = 1;
         booking.setImageResource(R.drawable.active_tab1);
         getSupportFragmentManager().beginTransaction().replace(frameLayout.getId(), BookingFragment.newInstance("", "", 3)).commit();
+    }
+
+    @Override
+    public void setUpSpaceForFlightsFragment() {
+        ConstraintSet constraintSet = new ConstraintSet();
+        ConstraintLayout constraintLayout = this.findViewById(R.id.main);
+        constraintSet.clone(constraintLayout);
+
+        constraintSet.connect(R.id.fragment_container, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START);
+        constraintSet.connect(R.id.fragment_container, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END);
+        constraintSet.connect(R.id.fragment_container, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
+        constraintSet.connect(R.id.fragment_container, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
+
+        constraintSet.applyTo(constraintLayout);
+
+        this.findViewById(R.id.bottom_navigation).setVisibility(View.GONE);
+    }
+
+    @Override
+    public void restoreBottomNavigationBar() {
+        ConstraintSet constraintSet = new ConstraintSet();
+        ConstraintLayout constraintLayout = this.findViewById(R.id.main);
+        constraintSet.clone(constraintLayout);
+
+        constraintSet.connect(R.id.fragment_container, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START);
+        constraintSet.connect(R.id.fragment_container, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END);
+        constraintSet.connect(R.id.fragment_container, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
+        constraintSet.connect(R.id.fragment_container, ConstraintSet.BOTTOM, R.id.bottom_navigation, ConstraintSet.TOP);
+
+        constraintSet.applyTo(constraintLayout);
+
+        this.findViewById(R.id.bottom_navigation).setVisibility(View.VISIBLE);
     }
 }

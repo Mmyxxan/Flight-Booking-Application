@@ -8,6 +8,8 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -25,9 +27,12 @@ import com.example.flightbookingapplication.R;
 import com.example.flightbookingapplication.UserFlightInformation;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -36,6 +41,15 @@ import java.util.Objects;
  * create an instance of this fragment.
  */
 public class TransportBookingFragment extends Fragment {
+    ConstraintLayout constraintLayout;
+    public interface restoreBottomNavigationBar {
+        void restoreBottomNavigationBar();
+    }
+    private restoreBottomNavigationBar restoreBottomNavigationBarListener;
+    public void setRestoreBottomNavigationBarListener(restoreBottomNavigationBar listener) {
+        restoreBottomNavigationBarListener = listener;
+    }
+    private UserFlightInformation userFlightInfo;
 
     public interface OnBacKPressed {
         void onBackButtonPressed();
@@ -47,6 +61,7 @@ public class TransportBookingFragment extends Fragment {
     private TextInputEditText origin, destination, departure_date, return_date, passenger, baby, dog, luggage;
     int class_type = 0, transport_type = 0;
     private ImageView back;
+    private String dayOfWeek;
     private TextView economy, business;
     private ImageView plane, ship, train, bus;
     DatePickerDialog.OnDateSetListener dateSetListener;
@@ -92,6 +107,17 @@ public class TransportBookingFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        if (savedInstanceState != null) {
+            userFlightInfo = savedInstanceState.getParcelable("userFlightInfo");
+        } else {
+            userFlightInfo = null;
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable("userFlightInfo", userFlightInfo);
     }
 
     public void setClass(int position) {
@@ -198,7 +224,13 @@ public class TransportBookingFragment extends Fragment {
                         departure_date.setText("");
                         departure_date.clearFocus();
                     }
-                    else departure_date.setError(null);
+                    else {
+                        departure_date.setError(null);
+                        final Calendar calendar = Calendar.getInstance();
+                        calendar.set(year, monthOfYear, dayOfMonth);
+                        dayOfWeek = new SimpleDateFormat("EEEE", Locale.getDefault()).format(calendar.getTime());
+                        Log.d("Date", dayOfWeek);
+                    }
                 } else if (return_date.hasFocus()) {
                     return_date.setText(formattedDate);
                     if (!validateDate()) {
@@ -307,6 +339,8 @@ public class TransportBookingFragment extends Fragment {
         dog = view.findViewById(R.id.dog_edit_text);
         luggage = view.findViewById(R.id.luggage_edit_text);
 
+        constraintLayout = view.findViewById(R.id.transport_booking_fragment);
+
         ImageView search = view.findViewById(R.id.search_flight);
         search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -344,6 +378,10 @@ public class TransportBookingFragment extends Fragment {
         origin.setText(userInput + " (" + Flight.abbreviated_city(userInput) + ")");
     }
 
+    private void checkAndFillDate() {
+
+    }
+
     private void navigateToFlights() {
         String origin = this.origin.getText().toString().trim();
         String destination = this.destination.getText().toString().trim();
@@ -360,12 +398,15 @@ public class TransportBookingFragment extends Fragment {
         origin = extractCityName(origin).trim();
         destination = extractCityName(destination).trim();
 
-        UserFlightInformation userFlightInformation = new UserFlightInformation(
-                origin, destination, departureDate, returnDate, passenger, baby, dog, luggage, class_type, transport_type
+        userFlightInfo = new UserFlightInformation(
+                origin, destination, departureDate, returnDate, passenger, baby, dog, luggage, class_type, transport_type, dayOfWeek
         );
 
+        constraintLayout.setVisibility(View.GONE);
+        getChildFragmentManager().beginTransaction().replace(R.id.transport_booking_fragment_container, new FlightsFragment()).commit();
+
 //        Intent intent = new Intent(getActivity(), YourTargetActivity.class);
-//        intent.putExtra("userFlightInformation", userFlightInformation);
+//        intent.putExtra("userFlightInfo", userFlightInfo);
 //        startActivity(intent);
 
     }
