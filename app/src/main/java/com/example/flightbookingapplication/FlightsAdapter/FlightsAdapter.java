@@ -14,7 +14,18 @@ import java.util.List;
 
 public class FlightsAdapter extends RecyclerView.Adapter<FlightsViewHolder> {
     List<Flight> flights;
+    public interface onFlightClickListener {
+        void onFlightClick(Flight flight);
+    }
 
+    private onFlightClickListener listener;
+    public void setOnFlightClickListener(onFlightClickListener listener) {
+        this.listener = listener;
+    }
+
+//    public FlightsAdapter(List<Flight> flights) {
+//        this.flights = flights;
+//    }
     public void setFlights(List<Flight> flights) {
         this.flights = flights;
     }
@@ -28,6 +39,12 @@ public class FlightsAdapter extends RecyclerView.Adapter<FlightsViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull FlightsViewHolder holder, int position) {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onFlightClick(flights.get(position));
+            }
+        });
         holder.tv_from_city.setText(flights.get(position).getOrigin());
         holder.tv_to_city.setText(flights.get(position).getDestination());
         holder.tv_price.setText(String.valueOf(flights.get(position).getCheapestPrice()));

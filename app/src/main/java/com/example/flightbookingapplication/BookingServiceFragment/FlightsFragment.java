@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,6 +30,7 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class FlightsFragment extends Fragment {
+    ConstraintLayout mainLayout;
     private RecyclerView calendarList, flightsList;
     private UserFlightInformation userFlightInformation;
     private TextView numFlights;
@@ -106,6 +108,7 @@ public class FlightsFragment extends Fragment {
                 backListener.onBackPressed();
             }
         });
+        mainLayout = view.findViewById(R.id.flights_fragment);
         numFlights = view.findViewById(R.id.num_flights);
         calendarList = view.findViewById(R.id.flights_recycler_view);
         calendarList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
@@ -134,8 +137,34 @@ public class FlightsFragment extends Fragment {
         });
         calendarList.setAdapter(calendarAdapter);
         flightsList = view.findViewById(R.id.flights_list);
+        flightsAdapter.setOnFlightClickListener(new FlightsAdapter.onFlightClickListener() {
+            @Override
+            public void onFlightClick(Flight flight) {
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("flight", flight);
+                bundle.putParcelable("userFlightInfo", userFlightInformation);
+                SelectSeatsFragment selectSeatsFragment = new SelectSeatsFragment();
+                selectSeatsFragment.setArguments(bundle);
+                hideViews();
+                selectSeatsFragment.setOnFragmentBackListener(new SelectSeatsFragment.OnFragmentBack() {
+                    @Override
+                    public void onFragmentBack() {
+                        getChildFragmentManager().beginTransaction().remove(selectSeatsFragment).commit();
+                        showViews();
+                    }
+                });
+                getChildFragmentManager().beginTransaction().replace(R.id.flights_fragment_container, selectSeatsFragment).commit();
+            }
+        });
         flightsList.setAdapter(flightsAdapter);
         flightsList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         return view;
+    }
+
+    private void hideViews() {
+        mainLayout.setVisibility(View.GONE);
+    }
+    private void showViews() {
+        mainLayout.setVisibility(View.VISIBLE);
     }
 }

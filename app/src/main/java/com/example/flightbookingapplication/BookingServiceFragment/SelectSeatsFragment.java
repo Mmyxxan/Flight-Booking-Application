@@ -3,12 +3,18 @@ package com.example.flightbookingapplication.BookingServiceFragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.example.flightbookingapplication.FlightModel.Flight;
 import com.example.flightbookingapplication.R;
+import com.example.flightbookingapplication.SeatsAdapter.SeatsAdapter;
+import com.example.flightbookingapplication.UserFlightInformation;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,9 +22,18 @@ import com.example.flightbookingapplication.R;
  * create an instance of this fragment.
  */
 public class SelectSeatsFragment extends Fragment {
+    private UserFlightInformation userFlightInformation;
+    private Flight flight;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    public interface OnFragmentBack {
+        void onFragmentBack();
+    }
+    private OnFragmentBack mListener;
+    public void setOnFragmentBackListener(OnFragmentBack listener) {
+        mListener = listener;
+    }
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -61,6 +76,19 @@ public class SelectSeatsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_select_seats, container, false);
+        View view = inflater.inflate(R.layout.fragment_select_seats, container, false);
+        ImageView back = view.findViewById(R.id.back_button);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mListener.onFragmentBack();
+            }
+        });
+
+        RecyclerView seatRows = view.findViewById(R.id.seat_rows);
+        SeatsAdapter seatsAdapter = new SeatsAdapter();
+        seatRows.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        seatRows.setAdapter(seatsAdapter);
+        return view;
     }
 }

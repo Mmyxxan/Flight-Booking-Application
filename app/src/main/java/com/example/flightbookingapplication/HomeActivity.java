@@ -189,6 +189,10 @@ public class HomeActivity extends AppCompatActivity implements HomeFragment.onFr
         constraintSet.connect(R.id.fragment_container, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
         constraintSet.connect(R.id.fragment_container, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
 
+        // change layout height and width of fragment_container to match parent
+        constraintSet.constrainHeight(R.id.fragment_container, ConstraintSet.MATCH_CONSTRAINT);
+        constraintSet.constrainWidth(R.id.fragment_container, ConstraintSet.MATCH_CONSTRAINT);
+
         constraintSet.applyTo(constraintLayout);
 
         this.findViewById(R.id.bottom_navigation).setVisibility(View.GONE);
@@ -204,6 +208,9 @@ public class HomeActivity extends AppCompatActivity implements HomeFragment.onFr
         constraintSet.connect(R.id.fragment_container, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END);
         constraintSet.connect(R.id.fragment_container, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
         constraintSet.connect(R.id.fragment_container, ConstraintSet.BOTTOM, R.id.bottom_navigation, ConstraintSet.TOP);
+
+        // change layout height of fragment container to 810dp
+        constraintSet.constrainHeight(R.id.fragment_container, 810);
 
         constraintSet.applyTo(constraintLayout);
 
