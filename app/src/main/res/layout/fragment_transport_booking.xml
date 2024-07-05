@@ -45,6 +45,9 @@
             android:layout_margin="20dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            android:focusableInTouchMode="true"
+            android:clickable="true"
+            android:focusable="true"
             app:endIconTint="@null"
             app:endIconDrawable="@null">
             <com.google.android.material.textfield.TextInputEditText
@@ -59,6 +62,9 @@
             android:layout_width="380dp"
             android:layout_height="65dp"
             android:id="@+id/to_layout"
+            android:focusableInTouchMode="true"
+            android:clickable="true"
+            android:focusable="true"
             app:layout_constraintTop_toBottomOf="@+id/from_layout"
             android:layout_margin="20dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -133,6 +139,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="5dp"
         android:layout_width="match_parent"
+        android:focusableInTouchMode="true"
+        android:clickable="true"
+        android:focusable="true"
         android:layout_height="wrap_content">
         <TextView
             app:layout_constraintStart_toStartOf="parent"
@@ -149,6 +158,9 @@
             android:id="@+id/passenger_text"
             app:layout_constraintTop_toBottomOf="@id/passenger_luggage_text"
             android:layout_margin="20dp"
+            android:focusableInTouchMode="true"
+            android:clickable="true"
+            android:focusable="true"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_width="80dp"
             app:startIconDrawable="@drawable/passenger"
@@ -175,6 +187,9 @@
             app:layout_constraintTop_toBottomOf="@id/passenger_luggage_text"
             android:layout_margin="20dp"
             app:layout_constraintStart_toEndOf="@id/passenger_text"
+            android:focusableInTouchMode="true"
+            android:clickable="true"
+            android:focusable="true"
             android:layout_width="80dp"
             app:startIconDrawable="@drawable/baby"
             android:layout_height="45dp">
@@ -199,6 +214,9 @@
             app:layout_constraintTop_toBottomOf="@id/passenger_luggage_text"
             android:layout_margin="20dp"
             app:layout_constraintStart_toEndOf="@id/baby_text"
+            android:focusableInTouchMode="true"
+            android:clickable="true"
+            android:focusable="true"
             android:layout_width="80dp"
             app:startIconDrawable="@drawable/dog"
             android:layout_height="45dp">

@@ -177,6 +177,7 @@ public class ProfileFragment extends Fragment {
                         setPhoneNumber(phone_number);
                         String email = info[3].getText().toString();
                         setEmail(email);
+                        setAvatar();
                         onFragmentBack();
                     }
                 });

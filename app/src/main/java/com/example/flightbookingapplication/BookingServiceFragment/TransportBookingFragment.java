@@ -226,6 +226,7 @@ public class TransportBookingFragment extends Fragment {
                     }
                     else {
                         departure_date.setError(null);
+                        departure_date.clearFocus();
                         final Calendar calendar = Calendar.getInstance();
                         calendar.set(year, monthOfYear, dayOfMonth);
                         dayOfWeek = new SimpleDateFormat("EEEE", Locale.getDefault()).format(calendar.getTime());
@@ -238,7 +239,10 @@ public class TransportBookingFragment extends Fragment {
                         return_date.setText("");
                         return_date.clearFocus();
                     }
-                    else return_date.setError(null);
+                    else {
+                        return_date.setError(null);
+                        return_date.clearFocus();
+                    }
                 }
             }
         };
@@ -369,7 +373,7 @@ public class TransportBookingFragment extends Fragment {
             }
             if (!isValid) {
                 // Show dialog to select from valid options
-                showOptionsDialog();
+                showOptionsDialog(origin);
                 return;
             }
         }
@@ -415,7 +419,7 @@ public class TransportBookingFragment extends Fragment {
         return text.replaceAll(" \\(.*\\)$", "");
     }
 
-    private void showOptionsDialog() {
+    private void showOptionsDialog(TextInputEditText origin) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Select an option");
         builder.setItems(Flight.validCities, new DialogInterface.OnClickListener() {
