@@ -1,10 +1,12 @@
 package com.example.flightbookingapplication.BookingServiceFragment;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -12,7 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.flightbookingapplication.FlightModel.Flight;
+import com.example.flightbookingapplication.FlightModel.FlightData;
+import com.example.flightbookingapplication.FlightsAdapter.CalendarAdapter;
+import com.example.flightbookingapplication.FlightsAdapter.FlightsAdapter;
 import com.example.flightbookingapplication.R;
+import com.example.flightbookingapplication.UserFlightInformation;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,9 +30,18 @@ import com.example.flightbookingapplication.R;
  */
 public class FlightsFragment extends Fragment {
     private RecyclerView calendarList, flightsList;
+    private UserFlightInformation userFlightInformation;
     private TextView numFlights;
     public interface setUpSpaceForFlightsFragment {
         void setUpSpaceForFlightsFragment();
+    }
+
+    public interface onBackPressed {
+        void onBackPressed();
+    }
+    private onBackPressed backListener;
+    public void setBackListener(onBackPressed backListener) {
+        this.backListener = backListener;
     }
     private setUpSpaceForFlightsFragment mListener;
     public void setListener(setUpSpaceForFlightsFragment listener) {
@@ -71,10 +89,10 @@ public class FlightsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+//        if (getArguments() != null) {
+//            mParam1 = getArguments().getString(ARG_PARAM1);
+//            mParam2 = getArguments().getString(ARG_PARAM2);
+//        }
     }
 
     @Override
@@ -82,9 +100,42 @@ public class FlightsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_flights, container, false);
-        calendarList = view.findViewById(R.id.flights_recycler_view);
-        flightsList = view.findViewById(R.id.flights_list);
+        view.findViewById(R.id.back_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                backListener.onBackPressed();
+            }
+        });
         numFlights = view.findViewById(R.id.num_flights);
+        calendarList = view.findViewById(R.id.flights_recycler_view);
+        calendarList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        CalendarAdapter calendarAdapter = new CalendarAdapter();
+        calendarAdapter.setNumberOfDays(30);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            userFlightInformation = getArguments().getParcelable("userFlightInfo", UserFlightInformation.class);
+        }
+        assert userFlightInformation != null;
+        calendarAdapter.setStartDate(userFlightInformation.getDepartureDate());
+        FlightData flightData = FlightData.getInstance(12345L, userFlightInformation.getDepartureDate());
+        calendarAdapter.setCurrentPosition(0);
+        FlightsAdapter flightsAdapter = new FlightsAdapter();
+        flightsAdapter.setFlights(flightData.getFlightContainers().get(0).filterFlights(userFlightInformation.getOrigin(), userFlightInformation.getDestination()).getFlights());
+//        flightsAdapter.setFlights(flightData.getFlightContainers().get(0).getFlights());
+        numFlights.setText(flightsAdapter.getItemCount() + " flights available " + userFlightInformation.getOrigin() + " to " + userFlightInformation.getDestination());
+        calendarAdapter.setOnItemSelectedListener(new CalendarAdapter.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(int position) {
+                List<Flight> flights = flightData.getFlightContainers().get(position).filterFlights(userFlightInformation.getOrigin(), userFlightInformation.getDestination()).getFlights();
+//                List<Flight> flights = flightData.getFlightContainers().get(position).getFlights();
+                flightsAdapter.setFlights(flights);
+                flightsAdapter.notifyDataSetChanged();
+                numFlights.setText(flightsAdapter.getItemCount() + " flights available " + userFlightInformation.getOrigin() + " to " + userFlightInformation.getDestination());
+            }
+        });
+        calendarList.setAdapter(calendarAdapter);
+        flightsList = view.findViewById(R.id.flights_list);
+        flightsList.setAdapter(flightsAdapter);
+        flightsList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         return view;
     }
 }

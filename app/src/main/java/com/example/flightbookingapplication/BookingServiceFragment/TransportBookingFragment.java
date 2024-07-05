@@ -2,6 +2,7 @@ package com.example.flightbookingapplication.BookingServiceFragment;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -40,7 +41,7 @@ import java.util.Objects;
  * Use the {@link TransportBookingFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TransportBookingFragment extends Fragment {
+public class TransportBookingFragment extends Fragment{
     ConstraintLayout constraintLayout;
     public interface restoreBottomNavigationBar {
         void restoreBottomNavigationBar();
@@ -112,6 +113,12 @@ public class TransportBookingFragment extends Fragment {
         } else {
             userFlightInfo = null;
         }
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        restoreBottomNavigationBarListener = context instanceof restoreBottomNavigationBar ? (restoreBottomNavigationBar) context : null;
     }
 
     @Override
@@ -407,7 +414,19 @@ public class TransportBookingFragment extends Fragment {
         );
 
         constraintLayout.setVisibility(View.GONE);
-        getChildFragmentManager().beginTransaction().replace(R.id.transport_booking_fragment_container, new FlightsFragment()).commit();
+        FlightsFragment flightsFragment = new FlightsFragment();
+        Bundle args = new Bundle();
+        args.putParcelable("userFlightInfo", userFlightInfo);
+        flightsFragment.setArguments(args);
+        flightsFragment.setBackListener(new FlightsFragment.onBackPressed() {
+            @Override
+            public void onBackPressed() {
+                getChildFragmentManager().beginTransaction().remove(flightsFragment).commit();
+                restoreBottomNavigationBarListener.restoreBottomNavigationBar();
+                constraintLayout.setVisibility(View.VISIBLE);
+            }
+        });
+        getChildFragmentManager().beginTransaction().replace(R.id.transport_booking_fragment_container, flightsFragment).commit();
 
 //        Intent intent = new Intent(getActivity(), YourTargetActivity.class);
 //        intent.putExtra("userFlightInfo", userFlightInfo);
@@ -427,6 +446,7 @@ public class TransportBookingFragment extends Fragment {
             public void onClick(DialogInterface dialogInterface, int i) {
                 // Set the selected option to the EditText
                 origin.setText(Flight.getValidCities().get(i)+ " (" + Flight.abbreviated_city(Flight.getValidCities().get(i)) + ")");
+                origin.clearFocus();
             }
         });
         builder.show();

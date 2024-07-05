@@ -23,4 +23,14 @@ public class FlightContainer {
         return null;
     }
 
+    public FlightContainer filterFlights(String origin, String destination) {
+        FlightContainer filteredFlights = new FlightContainer();
+        for (Flight flight : flights) {
+            if (flight.getOrigin().equals(origin) && flight.getDestination().equals(destination)) {
+                filteredFlights.addFlight(flight);
+            }
+        }
+        return filteredFlights;
+    }
+
 }

@@ -3,9 +3,7 @@
     android:background="#F0F0F0"
     android:layout_margin="20dp">
     <RelativeLayout
-
         android:layout_width="match_parent"
-
         android:layout_height="match_parent"
         android:background="@drawable/ticket_background"
         android:padding="16dp">
@@ -20,7 +18,7 @@
             android:layout_marginBottom="8dp">
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="10dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical"
@@ -40,7 +38,7 @@
                     android:layout_height="wrap_content"
                     android:text="New York"
                     android:fontFamily="@font/edit_text"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textColor="#050505"/>
             </LinearLayout>
 
@@ -68,11 +66,11 @@
                     android:textColor="#01635D"/>
                 <TextView
                     android:id="@+id/tv_to_city"
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:fontFamily="@font/edit_text"
                     android:layout_height="wrap_content"
                     android:text="London"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textColor="#050505"/>
             </LinearLayout>
         </LinearLayout>
@@ -125,7 +123,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:padding="8dp">
+                android:paddingTop="8dp">
 
                 <TextView
                     android:id="@+id/tv_departure_label"

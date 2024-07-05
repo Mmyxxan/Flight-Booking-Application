@@ -4,14 +4,12 @@ import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Flight implements Parcelable {
     public String number;
@@ -22,6 +20,20 @@ public class Flight implements Parcelable {
     public String arrival_date;
     public String arrival_time;
     private FlightSeat[][] seats;
+    public String getDepartureTime() {
+        return departure_time;
+
+    }
+    public String getDepartureDate() {
+        return departure_date;
+    }
+
+    public String getOrigin() {
+        return origin;
+    }
+    public String getDestination() {
+        return destination;
+    }
 
     public Flight(String number, String origin, String destination, String departure_date, String departure_time, FlightSeat[][] seats, String arrival_date, String arrival_time) {
         this.number = number;
@@ -89,6 +101,19 @@ public class Flight implements Parcelable {
         }
     }
 
+    // Method to get the cheapest price of this flight
+    public int getCheapestPrice() {
+        int cheapestPrice = Integer.MAX_VALUE;
+        for (FlightSeat[] row : seats) {
+            for (FlightSeat seat : row) {
+                if (seat.getPrice() < cheapestPrice) {
+                    cheapestPrice = seat.getPrice();
+                }
+            }
+        }
+        return cheapestPrice;
+    }
+
     // Other methods...
 
     public String getFlightNumber() {
@@ -100,24 +125,22 @@ public class Flight implements Parcelable {
     }
 
     public static boolean checkCityOrigin(String origin) {
-        List<String> validCities = Arrays.asList("New York City", "London", "San Francisco", "Los Angeles", "Boston");
+        List<String> validCities = Arrays.asList("Tokyo", "London", "Boston");
         return validCities.contains(origin);
     }
 
     public static ArrayList<String> getValidCities() {
         ArrayList<String> validCities = new ArrayList<>();
-        validCities.add("New York City");
+        validCities.add("Tokyo");
         validCities.add("London");
-        validCities.add("San Francisco");
-        validCities.add("Los Angeles");
         validCities.add("Boston");
         return validCities;
     }
 
-    public static String[] validCities = {"New York City", "London", "San Francisco", "Los Angeles", "Boston"};
+    public static String[] validCities = {"Tokyo", "London", "Boston"};
 
     public static boolean checkCityDestination(String destination) {
-        List<String> validCities = Arrays.asList("New York City", "London", "San Francisco", "Los Angeles", "Boston");
+        List<String> validCities = Arrays.asList("Tokyo", "London", "Boston");
         return validCities.contains(destination);
     }
 
@@ -196,12 +219,42 @@ public class Flight implements Parcelable {
 
     public static String abbreviated_city(String city) {
         Map<String, String> cityAbbreviations = new HashMap<>();
-        cityAbbreviations.put("New York City", "NYC");
+        cityAbbreviations.put("Tokyo", "TKO");
         cityAbbreviations.put("London", "LDN");
-        cityAbbreviations.put("San Francisco", "SFO");
-        cityAbbreviations.put("Los Angeles", "LAX");
         cityAbbreviations.put("Boston", "BOS");
 
         return cityAbbreviations.getOrDefault(city, city);
     }
+
+    public static String getMonthDay(String dateStr) {
+        SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        SimpleDateFormat targetFormat = new SimpleDateFormat("MM-dd", Locale.getDefault());
+        try {
+            return targetFormat.format(originalFormat.parse(dateStr));
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return dateStr; // Return the original date string if parsing fails
+        }
+    }
+
 }
+
+//public class Main {
+//    public static void main(String[] args) {
+//        long seed = 12345L;
+//        String startDate = "2024-07-01";
+//        FlightData flightData = FlightData.getInstance(seed, startDate);
+//
+//        FlightContainer flightContainerForDay10 = flightData.getFlightContainers().get(9); // Get flights for the 10th day from the start date
+//        if (flightContainerForDay10 != null) {
+//            List<Flight> flightsForDay10 = flightContainerForDay10.getFlights();
+//
+//            for (Flight flight : flightsForDay10) {
+//                System.out.println(flight.getFlightNumber() + " - " + flight.getOrigin() + " to " + flight.getDestination());
+//                int cheapestPrice = flight.getCheapestPrice();
+//                System.out.println("Cheapest price: $" + cheapestPrice);
+//            }
+//        }
+//    }
+//}
+
