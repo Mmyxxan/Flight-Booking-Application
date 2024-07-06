@@ -41,7 +41,7 @@ public class FlightData {
 
         for (int day = 0; day < 30; day++) {
             FlightContainer flightContainer = new FlightContainer();
-            int numberOfFlights = random.nextInt(4) + 1; // Between 1 and 4 flights
+            int numberOfFlights = random.nextInt(5) + 8; // Between 8 and 12 flights
 
             for (int i = 0; i < numberOfFlights; i++) {
                 Flight flight = generateRandomFlight(calendar);
