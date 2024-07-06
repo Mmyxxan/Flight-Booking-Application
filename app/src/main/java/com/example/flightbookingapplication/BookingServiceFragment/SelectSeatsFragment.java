@@ -112,6 +112,12 @@ public class SelectSeatsFragment extends Fragment {
         SeatsAdapter seatsAdapter = new SeatsAdapter(flight.getSeats());
         TextView dollar = view.findViewById(R.id.dollar);
         TextView traveller_seat_number = view.findViewById(R.id.traveller_seat_number);
+        seatsAdapter.setOnUserSeatTypeListener(new SeatsAdapter.getUserSeatType() {
+            @Override
+            public int getUserSeatType() {
+                return userFlightInformation.getClassType();
+            }
+        });
         seatsAdapter.setOnSeatSelectedSuccessful(new SeatsViewHolder.onSeatSelectedSuccessful() {
             @Override
             public void onSeatSelected(int row, int column) {

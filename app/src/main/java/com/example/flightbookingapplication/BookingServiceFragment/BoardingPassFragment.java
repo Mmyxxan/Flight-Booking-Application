@@ -169,14 +169,14 @@ public class BoardingPassFragment extends Fragment {
                 seat_code.append(", " + FlightSeat.convertSeatNumberToSeatCode(seatsReservation.getReservationSeats().get(i).getSeatNumber()));
             }
         }
-        for (int i = 0; i < seatsReservation.getReservationSeats().size(); i++) {
-            if (i == 0) {
-                class_type.setText(seatsReservation.getReservationSeats().get(i).getSeatClass());
-            } else {
-                class_type.append(", " + seatsReservation.getReservationSeats().get(i).getSeatClass());
-            }
-        }
-
+//        for (int i = 0; i < seatsReservation.getReservationSeats().size(); i++) {
+//            if (i == 0) {
+//                class_type.setText(seatsReservation.getReservationSeats().get(i).getSeatClass());
+//            } else {
+//                class_type.append(", " + seatsReservation.getReservationSeats().get(i).getSeatClass());
+//            }
+//        }
+        class_type.setText(seatsReservation.getReservationSeats().get(0).getSeatClass());
         return view;
     }
 

@@ -11,6 +11,13 @@ import com.example.flightbookingapplication.FlightModel.FlightSeat;
 import com.example.flightbookingapplication.R;
 
 public class SeatsAdapter extends RecyclerView.Adapter<SeatsViewHolder> {
+    public interface getUserSeatType {
+        int getUserSeatType();
+    }
+    private getUserSeatType seatTypeListener;
+    public void setOnUserSeatTypeListener(getUserSeatType listener) {
+        seatTypeListener = listener;
+    }
     public void resetData() {
         currentRow = -1;
         currentColumn = -1;
@@ -52,6 +59,12 @@ public class SeatsAdapter extends RecyclerView.Adapter<SeatsViewHolder> {
     public SeatsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.seat_row_item, parent, false);
         SeatsViewHolder seatsViewHolder = new SeatsViewHolder(view);
+        seatsViewHolder.setShouldDisableRow(new SeatsViewHolder.shouldDisableRow() {
+            @Override
+            public boolean shouldDisableSeatRow(int row) {
+                return ((seatTypeListener.getUserSeatType() == 0) == (row < 2));
+            }
+        });
         seatsViewHolder.setOnSeatSelectedSuccessful(new SeatsViewHolder.onSeatSelectedSuccessful() {
             @Override
             public void onSeatSelected(int row, int column) {

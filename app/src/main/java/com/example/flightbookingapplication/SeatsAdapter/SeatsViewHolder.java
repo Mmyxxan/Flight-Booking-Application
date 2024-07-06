@@ -1,14 +1,25 @@
 package com.example.flightbookingapplication.SeatsAdapter;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.flightbookingapplication.HomeActivity;
 import com.example.flightbookingapplication.R;
 
 public class SeatsViewHolder extends RecyclerView.ViewHolder {
+    public interface shouldDisableRow {
+        boolean shouldDisableSeatRow(int row);
+    }
+    private shouldDisableRow disableRowListener;
+    public void setShouldDisableRow(shouldDisableRow listener) {
+        this.disableRowListener = listener;
+    }
     public interface onSeatSelectedSuccessful {
         void onSeatSelected(int row, int column);
     }
@@ -48,6 +59,14 @@ public class SeatsViewHolder extends RecyclerView.ViewHolder {
             seats[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    if (disableRowListener.shouldDisableSeatRow(getAdapterPosition())) {
+                        new AlertDialog.Builder(view.getContext())
+                                .setTitle("Seat type Error!")
+                                .setMessage("Please select the seats corresponding to your seat type (or class).")
+                                .setPositiveButton(android.R.string.ok, (dialog, which) -> dialog.dismiss())
+                                .show();
+                        return;
+                    }
                     if (listener != null) {
                         listener.onRowClick(getAdapterPosition());
                     }
