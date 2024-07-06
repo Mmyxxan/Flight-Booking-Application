@@ -1,7 +1,9 @@
 package com.example.flightbookingapplication;
 
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
@@ -180,40 +182,49 @@ public class HomeActivity extends AppCompatActivity implements HomeFragment.onFr
 
     @Override
     public void setUpSpaceForFlightsFragment() {
+        findViewById(R.id.bottom_navigation).setVisibility(View.GONE);
         ConstraintSet constraintSet = new ConstraintSet();
-        ConstraintLayout constraintLayout = this.findViewById(R.id.main);
+        ConstraintLayout constraintLayout = findViewById(R.id.main);
         constraintSet.clone(constraintLayout);
 
+        // Apply new constraints to make fragment_container match parent
         constraintSet.connect(R.id.fragment_container, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START);
         constraintSet.connect(R.id.fragment_container, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END);
         constraintSet.connect(R.id.fragment_container, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
         constraintSet.connect(R.id.fragment_container, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
 
-        // change layout height and width of fragment_container to match parent
-        constraintSet.constrainHeight(R.id.fragment_container, ConstraintSet.MATCH_CONSTRAINT);
-        constraintSet.constrainWidth(R.id.fragment_container, ConstraintSet.MATCH_CONSTRAINT);
-
+        // Apply the constraint set to the layout
         constraintSet.applyTo(constraintLayout);
 
-        this.findViewById(R.id.bottom_navigation).setVisibility(View.GONE);
+        // Set LayoutParams to match parent
+        ViewGroup.LayoutParams layoutParams = frameLayout.getLayoutParams();
+        layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
+        frameLayout.setLayoutParams(layoutParams);
     }
 
     @Override
     public void restoreBottomNavigationBar() {
+        findViewById(R.id.bottom_navigation).setVisibility(View.VISIBLE);
         ConstraintSet constraintSet = new ConstraintSet();
-        ConstraintLayout constraintLayout = this.findViewById(R.id.main);
+        ConstraintLayout constraintLayout = findViewById(R.id.main);
         constraintSet.clone(constraintLayout);
 
+        // Apply new constraints to set fragment_container height relative to bottom_navigation
         constraintSet.connect(R.id.fragment_container, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START);
         constraintSet.connect(R.id.fragment_container, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END);
         constraintSet.connect(R.id.fragment_container, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
         constraintSet.connect(R.id.fragment_container, ConstraintSet.BOTTOM, R.id.bottom_navigation, ConstraintSet.TOP);
 
-        // change layout height of fragment container to 810dp
-        constraintSet.constrainHeight(R.id.fragment_container, 810);
-
+        // Apply the constraint set to the layout
         constraintSet.applyTo(constraintLayout);
 
-        this.findViewById(R.id.bottom_navigation).setVisibility(View.VISIBLE);
+        // Convert dp to pixels and set the height
+        int heightInDp = 810;
+        int heightInPx = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, heightInDp, getResources().getDisplayMetrics()
+        );
+        ViewGroup.LayoutParams layoutParams = frameLayout.getLayoutParams();
+        layoutParams.height = heightInPx;
+        frameLayout.setLayoutParams(layoutParams);
     }
 }

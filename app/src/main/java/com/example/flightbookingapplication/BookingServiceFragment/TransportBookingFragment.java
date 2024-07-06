@@ -422,8 +422,8 @@ public class TransportBookingFragment extends Fragment{
             @Override
             public void onBackPressed() {
                 getChildFragmentManager().beginTransaction().remove(flightsFragment).commit();
-                restoreBottomNavigationBarListener.restoreBottomNavigationBar();
                 constraintLayout.setVisibility(View.VISIBLE);
+                restoreBottomNavigationBarListener.restoreBottomNavigationBar();
             }
         });
         getChildFragmentManager().beginTransaction().replace(R.id.transport_booking_fragment_container, flightsFragment).commit();
