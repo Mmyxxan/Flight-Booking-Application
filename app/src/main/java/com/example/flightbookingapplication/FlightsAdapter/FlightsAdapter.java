@@ -14,6 +14,7 @@ import java.util.List;
 
 public class FlightsAdapter extends RecyclerView.Adapter<FlightsViewHolder> {
     List<Flight> flights;
+    private int class_type;
     public interface onFlightClickListener {
         void onFlightClick(Flight flight);
     }
@@ -23,9 +24,9 @@ public class FlightsAdapter extends RecyclerView.Adapter<FlightsViewHolder> {
         this.listener = listener;
     }
 
-//    public FlightsAdapter(List<Flight> flights) {
-//        this.flights = flights;
-//    }
+    public FlightsAdapter(int class_type) {
+        this.class_type = class_type;
+    }
     public void setFlights(List<Flight> flights) {
         this.flights = flights;
     }
@@ -47,7 +48,8 @@ public class FlightsAdapter extends RecyclerView.Adapter<FlightsViewHolder> {
         });
         holder.tv_from_city.setText(flights.get(position).getOrigin());
         holder.tv_to_city.setText(flights.get(position).getDestination());
-        holder.tv_price.setText(String.valueOf(flights.get(position).getCheapestPrice()));
+        if (class_type == 1) holder.tv_price.setText(String.valueOf(flights.get(position).getHighestPrice()));
+        else holder.tv_price.setText(String.valueOf(flights.get(position).getCheapestPrice()));
         String formattedDate = Flight.getMonthDay(flights.get(position).getDepartureDate());
         holder.tv_date.setText(formattedDate);
         holder.tv_from_code.setText(Flight.abbreviated_city(flights.get(position).getOrigin()));

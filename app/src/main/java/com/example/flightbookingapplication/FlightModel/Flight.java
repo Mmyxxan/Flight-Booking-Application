@@ -114,6 +114,18 @@ public class Flight implements Parcelable {
         return cheapestPrice;
     }
 
+    public int getHighestPrice() {
+        int highestPrice = Integer.MIN_VALUE;
+        for (FlightSeat[] row : seats) {
+            for (FlightSeat seat : row) {
+                if (seat.getPrice() > highestPrice) {
+                    highestPrice = seat.getPrice();
+                }
+            }
+        }
+        return highestPrice;
+    }
+
     // Other methods...
 
     public String getFlightNumber() {

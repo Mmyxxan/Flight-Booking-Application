@@ -1,332 +1,345 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="390dp"
+    android:layout_gravity="center"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="560dp">
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_margin="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:background="@drawable/boarding_pass_background"
-        android:layout_width="390dp"
-        android:layout_height="560dp">
-        <ImageView
-            android:layout_marginTop="20dp"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_margin="10dp"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_width="wrap_content"
-            android:id="@+id/british_airways"
-            android:src="@drawable/british_airways"
-            android:layout_height="wrap_content">
+            android:background="@drawable/boarding_pass_background"
+            android:layout_width="390dp"
+            android:layout_height="560dp">
+            <ImageView
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="wrap_content"
+                android:id="@+id/british_airways"
+                android:src="@drawable/british_airways"
+                android:layout_height="wrap_content">
 
-        </ImageView>
-        <ImageView
-            android:layout_marginTop="18dp"
-            app:layout_constraintTop_toBottomOf="@id/british_airways"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:src="@drawable/divider"
-            android:id="@+id/divider1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            </ImageView>
+            <ImageView
+                android:layout_marginTop="18dp"
+                app:layout_constraintTop_toBottomOf="@id/british_airways"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:src="@drawable/divider"
+                android:id="@+id/divider1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-        </ImageView>
-        <RelativeLayout
-            android:id="@+id/ticket"
-            app:layout_constraintTop_toBottomOf="@id/divider1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_width="match_parent"
-            android:layout_height="147dp"
-            android:padding="16dp">
+            </ImageView>
+            <RelativeLayout
+                android:id="@+id/ticket"
+                app:layout_constraintTop_toBottomOf="@id/divider1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="147dp"
+                android:padding="16dp">
 
-            <!-- Upper part containing flight details -->
+                <!-- Upper part containing flight details -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/origin_destination"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="8dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:paddingLeft="9dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_from_code"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/medium"
+                            android:text="NYC"
+                            android:textSize="14sp"
+                            android:textColor="#01635D"/>
+                        <TextView
+                            android:id="@+id/tv_from_city"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="New York"
+                            android:fontFamily="@font/edit_text"
+                            android:textSize="18sp"
+                            android:textColor="#050505"/>
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_flight"
+                        android:layout_marginHorizontal="8dp"/>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="start">
+
+                        <TextView
+                            android:id="@+id/tv_to_code"
+                            android:fontFamily="@font/medium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="LDN"
+                            android:textSize="14sp"
+                            android:textColor="#01635D"/>
+                        <TextView
+                            android:id="@+id/tv_to_city"
+                            android:layout_width="wrap_content"
+                            android:fontFamily="@font/edit_text"
+                            android:layout_height="wrap_content"
+                            android:text="London"
+                            android:textSize="18sp"
+                            android:textColor="#050505"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Lower part containing ticket details -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/origin_destination">
+
+                    <LinearLayout
+                        android:id="@+id/linear_layout"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:id="@+id/tv_date_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Date"
+                            android:fontFamily="@font/medium"
+                            android:textColor="#01635D"
+                            android:textSize="12sp"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="02 Jun"
+                            android:fontFamily="@font/edit_text"
+                            android:textSize="16sp"
+                            android:textColor="@android:color/black"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        app:layout_constraintStart_toEndOf="@id/linear_layout"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:id="@+id/tv_departure_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Departure"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/medium"
+                            android:textColor="#01635D"/>
+
+                        <TextView
+                            android:id="@+id/tv_departure"
+                            android:layout_width="wrap_content"
+                            android:fontFamily="@font/edit_text"
+                            android:layout_height="wrap_content"
+                            android:text="9:00 AM"
+                            android:textSize="16sp"
+                            android:textColor="@android:color/black"/>
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </RelativeLayout>
+            <ImageView
+                android:layout_marginTop="5dp"
+                app:layout_constraintTop_toBottomOf="@id/ticket"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:src="@drawable/divider"
+                android:id="@+id/divider2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </ImageView>
+
+
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/origin_destination"
+                app:layout_constraintTop_toBottomOf="@id/divider2"
                 android:orientation="horizontal"
-                android:layout_marginBottom="8dp">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:paddingLeft="9dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tv_from_code"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/medium"
-                        android:text="NYC"
-                        android:textSize="14sp"
-                        android:textColor="#01635D"/>
-                    <TextView
-                        android:id="@+id/tv_from_city"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="New York"
-                        android:fontFamily="@font/edit_text"
-                        android:textSize="18sp"
-                        android:textColor="#050505"/>
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_flight"
-                    android:layout_marginHorizontal="8dp"/>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="start">
-
-                    <TextView
-                        android:id="@+id/tv_to_code"
-                        android:fontFamily="@font/medium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="LDN"
-                        android:textSize="14sp"
-                        android:textColor="#01635D"/>
-                    <TextView
-                        android:id="@+id/tv_to_city"
-                        android:layout_width="wrap_content"
-                        android:fontFamily="@font/edit_text"
-                        android:layout_height="wrap_content"
-                        android:text="London"
-                        android:textSize="18sp"
-                        android:textColor="#050505"/>
-                </LinearLayout>
-            </LinearLayout>
-
-            <!-- Lower part containing ticket details -->
-            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/information"
+                android:gravity="center_horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/origin_destination">
-
+                android:layout_height="wrap_content">
                 <LinearLayout
-                    android:id="@+id/linear_layout"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="0dp"
+                    android:gravity="start"
                     android:orientation="vertical"
-                    android:padding="8dp">
-
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
                     <TextView
-                        android:id="@+id/tv_date_label"
+                        android:id="@+id/passenger"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Date"
+                        android:text="Passenger"
+                        android:textSize="12sp"
                         android:fontFamily="@font/medium"
                         android:textColor="#01635D"
-                        android:textSize="12sp"
-                        />
+                        >
 
+                    </TextView>
                     <TextView
-                        android:id="@+id/tv_date"
+                        android:id="@+id/adult"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="02 Jun"
-                        android:fontFamily="@font/edit_text"
+                        android:text="1 Adult"
                         android:textSize="16sp"
-                        android:textColor="@android:color/black"/>
+                        android:fontFamily="@font/edit_text"
+                        android:textColor="@android:color/black"
+                        >
+
+                    </TextView>
                 </LinearLayout>
-
                 <LinearLayout
-                    app:layout_constraintStart_toEndOf="@id/linear_layout"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:gravity="start"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="13dp"
                     android:orientation="vertical"
-                    android:padding="8dp">
-
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
                     <TextView
-                        android:id="@+id/tv_departure_label"
+                        android:id="@+id/ticket_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Departure"
+                        android:text="Ticket"
                         android:textSize="12sp"
                         android:fontFamily="@font/medium"
-                        android:textColor="#01635D"/>
+                        android:textColor="#01635D"
+                        >
 
+                    </TextView>
                     <TextView
-                        android:id="@+id/tv_departure"
+                        android:id="@+id/ticket_code"
                         android:layout_width="wrap_content"
-                        android:fontFamily="@font/edit_text"
                         android:layout_height="wrap_content"
-                        android:text="9:00 AM"
+                        android:text="NL82 - 1"
                         android:textSize="16sp"
-                        android:textColor="@android:color/black"/>
+                        android:fontFamily="@font/edit_text"
+                        android:textColor="@android:color/black"
+                        >
+
+                    </TextView>
                 </LinearLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </RelativeLayout>
-        <ImageView
-            android:layout_marginTop="5dp"
-            app:layout_constraintTop_toBottomOf="@id/ticket"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:src="@drawable/divider"
-            android:id="@+id/divider2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-        </ImageView>
-
-
-        <LinearLayout
-            app:layout_constraintTop_toBottomOf="@id/divider2"
-            android:orientation="horizontal"
-            android:id="@+id/information"
-            android:gravity="center_horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:layout_margin="20dp"
-                android:gravity="start"
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/passenger"
+                <LinearLayout
+                    android:gravity="start"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="13dp"
+                    android:orientation="vertical"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Passenger"
-                    android:textSize="12sp"
-                    android:fontFamily="@font/medium"
-                    android:textColor="#01635D"
-                    >
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/class_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Class"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/medium"
+                        android:textColor="#01635D"
+                        >
 
-                </TextView>
-                <TextView
-                    android:id="@+id/adult"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1 Adult"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/edit_text"
-                    android:textColor="@android:color/black"
-                    >
+                    </TextView>
+                    <TextView
+                        android:id="@+id/business"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:text="Business, Business, Business, Economy, Economy, Economy"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/edit_text"
+                        android:textColor="@android:color/black"
+                        >
 
-                </TextView>
-            </LinearLayout>
-            <LinearLayout
-                android:gravity="start"
-                android:layout_margin="20dp"
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/ticket_number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Ticket"
-                    android:textSize="12sp"
-                    android:fontFamily="@font/medium"
-                    android:textColor="#01635D"
-                    >
+                    </TextView>
 
-                </TextView>
-                <TextView
-                    android:id="@+id/ticket_code"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="NL82 - 1"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/edit_text"
-                    android:textColor="@android:color/black"
-                    >
+                </LinearLayout>
+                <LinearLayout
+                    android:gravity="start"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="13dp"
+                    android:layout_marginEnd="10dp"
+                    android:orientation="vertical"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/seat_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Seat"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/medium"
+                        android:textColor="#01635D"
+                        >
 
-                </TextView>
-            </LinearLayout>
-            <LinearLayout
-                android:gravity="start"
-                android:layout_margin="20dp"
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/class_type"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Class"
-                    android:textSize="12sp"
-                    android:fontFamily="@font/medium"
-                    android:textColor="#01635D"
-                    >
+                    </TextView>
+                    <TextView
+                        android:id="@+id/seat_code"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2A, 2B, 2C, 2D, 3A, 3B"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/edit_text"
+                        android:textColor="@android:color/black"
+                        >
 
-                </TextView>
-                <TextView
-                    android:id="@+id/business"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Business"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/edit_text"
-                    android:textColor="@android:color/black"
-                    >
+                    </TextView>
 
-                </TextView>
+                </LinearLayout>
+
 
             </LinearLayout>
-            <LinearLayout
-                android:gravity="start"
+            <ImageView
+                android:src="@drawable/barcode"
                 android:layout_margin="20dp"
-                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/information"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/seat_number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Seat"
-                    android:textSize="12sp"
-                    android:fontFamily="@font/medium"
-                    android:textColor="#01635D"
-                    >
 
-                </TextView>
-                <TextView
-                    android:id="@+id/seat_code"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="2A"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/edit_text"
-                    android:textColor="@android:color/black"
-                    >
+            </ImageView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
-                </TextView>
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-        <ImageView
-            android:src="@drawable/barcode"
-            app:layout_constraintTop_toBottomOf="@id/information"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-        </ImageView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

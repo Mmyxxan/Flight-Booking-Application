@@ -27,6 +27,7 @@ public class IntroductionAdapter extends RecyclerView.Adapter<IntroductionViewHo
         Log.d("TAG", "onBindViewHolder: " + position);
 //        recyclerView.setCurrentPosition(position);
         holder.bindView(position);
+        holder.itemView.setEnabled(false);
     }
 
     public void setRecyclerView(CustomRecyclerView recyclerView) {

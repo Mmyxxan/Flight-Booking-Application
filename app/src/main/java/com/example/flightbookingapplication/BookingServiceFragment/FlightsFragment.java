@@ -16,13 +16,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.flightbookingapplication.FlightModel.Flight;
+import com.example.flightbookingapplication.FlightModel.FlightContainer;
 import com.example.flightbookingapplication.FlightModel.FlightData;
 import com.example.flightbookingapplication.FlightsAdapter.CalendarAdapter;
 import com.example.flightbookingapplication.FlightsAdapter.FlightsAdapter;
 import com.example.flightbookingapplication.R;
 import com.example.flightbookingapplication.UserFlightInformation;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -119,17 +124,28 @@ public class FlightsFragment extends Fragment {
         }
         assert userFlightInformation != null;
         calendarAdapter.setStartDate(userFlightInformation.getDepartureDate());
-        FlightData flightData = FlightData.getInstance(12345L, userFlightInformation.getDepartureDate());
+        FlightData flightData = FlightData.getInstance(12345L);
         calendarAdapter.setCurrentPosition(0);
-        FlightsAdapter flightsAdapter = new FlightsAdapter();
-        flightsAdapter.setFlights(flightData.getFlightContainers().get(0).filterFlights(userFlightInformation.getOrigin(), userFlightInformation.getDestination()).getFlights());
-//        flightsAdapter.setFlights(flightData.getFlightContainers().get(0).getFlights());
+        FlightsAdapter flightsAdapter = new FlightsAdapter(userFlightInformation.getClassType());
+        flightData.generateDataForDate(userFlightInformation.getDepartureDate());
+        flightsAdapter.setFlights(flightData.getFlightContainers().get(userFlightInformation.getDepartureDate()).filterFlights(userFlightInformation.getOrigin(), userFlightInformation.getDestination()).getFlights());
         numFlights.setText(flightsAdapter.getItemCount() + " flights available " + userFlightInformation.getOrigin() + " to " + userFlightInformation.getDestination());
         calendarAdapter.setOnItemSelectedListener(new CalendarAdapter.OnItemSelectedListener() {
             @Override
             public void onItemSelected(int position) {
-                List<Flight> flights = flightData.getFlightContainers().get(position).filterFlights(userFlightInformation.getOrigin(), userFlightInformation.getDestination()).getFlights();
-//                List<Flight> flights = flightData.getFlightContainers().get(position).getFlights();
+                String startDate = userFlightInformation.getDepartureDate();
+                Calendar calendar = Calendar.getInstance();
+                calendar.add(Calendar.DAY_OF_YEAR, position);
+                try {
+                    calendar.setTime(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(startDate));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(calendar.getTime());
+                flightData.generateDataForDate(date);
+                FlightContainer flightContainer = flightData.getFlightContainers().get(date);
+                List<Flight> flights = flightContainer.getFlights();
                 flightsAdapter.setFlights(flights);
                 flightsAdapter.notifyDataSetChanged();
                 numFlights.setText(flightsAdapter.getItemCount() + " flights available " + userFlightInformation.getOrigin() + " to " + userFlightInformation.getDestination());

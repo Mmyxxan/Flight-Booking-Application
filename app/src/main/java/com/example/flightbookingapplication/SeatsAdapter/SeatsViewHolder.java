@@ -9,6 +9,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.flightbookingapplication.R;
 
 public class SeatsViewHolder extends RecyclerView.ViewHolder {
+    public interface onSeatSelectedSuccessful {
+        void onSeatSelected(int row, int column);
+    }
+    private onSeatSelectedSuccessful selectedListener;
+    public void setOnSeatSelectedSuccessful(onSeatSelectedSuccessful listener) {
+        this.selectedListener = listener;
+    }
+    public interface getSeatsStatus {
+        boolean getSeatStatus(int row, int column);
+    }
+    private getSeatsStatus seatStatusListener;
+    public void setGetSeatsStatus(getSeatsStatus listener) {
+        this.seatStatusListener = listener;
+    }
     public interface onRowClickListener {
         void onRowClick(int row);
     }
@@ -29,24 +43,32 @@ public class SeatsViewHolder extends RecyclerView.ViewHolder {
         seats[1] = itemView.findViewById(R.id.seat2);
         seats[2] = itemView.findViewById(R.id.seat3);
         seats[3] = itemView.findViewById(R.id.seat4);
-        for (TextView seat : seats) {
-            seat.setOnClickListener(new View.OnClickListener() {
+        for (int i = 0; i < 4; i++) {
+            int index = i;
+            seats[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (listener != null) {
                         listener.onRowClick(getAdapterPosition());
                     }
+                    selectedListener.onSeatSelected(getAdapterPosition(), index);
                     resetSeats();
-                    seat.setBackgroundResource(R.drawable.selected_seat);
+                    seats[index].setBackgroundResource(R.drawable.selected_seat);
                 }
             });
         }
     }
 
     public void resetSeats() {
-        for (TextView seat : seats) {
-            seat.setBackgroundResource(R.drawable.seat);
-//            seat.setEnabled(true);
+        for (int i = 0; i < 4; i++) {
+            if (seatStatusListener.getSeatStatus(getAdapterPosition(), i)) {
+                seats[i].setBackgroundResource(R.drawable.seat);
+                seats[i].setEnabled(true);
+            }
+            else {
+                seats[i].setBackgroundResource(R.drawable.booked_seat);
+                seats[i].setEnabled(false);
+            }
         }
     }
 }

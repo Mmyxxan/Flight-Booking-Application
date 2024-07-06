@@ -3,13 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:background="#F5F5F5"
+    android:id="@+id/select_seats_fragment_container"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".BookingServiceFragment.SelectSeatsFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/select_seats_fragments"
+        android:id="@+id/select_seats_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <ImageView
@@ -47,23 +48,25 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:id="@+id/traveller_text"
-                android:layout_margin="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
                 android:text="Traveller"
+                android:textSize="17sp"
                 android:fontFamily="@font/edit_text"
                 android:textColor="#050505"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
             </TextView>
-            <androidx.recyclerview.widget.RecyclerView
+            <com.example.flightbookingapplication.SeatsAdapter.CustomTravellerRecyclerView
                 android:id="@+id/traveller_list"
                 app:layout_constraintStart_toStartOf="parent"
                 android:orientation="horizontal"
                 app:layout_constraintTop_toBottomOf="@id/traveller_text"
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
+                android:layout_height="wrap_content">
 
-            </androidx.recyclerview.widget.RecyclerView>
+            </com.example.flightbookingapplication.SeatsAdapter.CustomTravellerRecyclerView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
         <ImageView
@@ -165,7 +168,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_width="match_parent"
-                android:layout_height="300dp">
+                android:layout_height="290dp">
 
             </androidx.recyclerview.widget.RecyclerView>
 
@@ -210,7 +213,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_margin="20dp"
                 android:paddingRight="15dp"
-                android:text="Traveller 1 / Seat 2A"
                 android:id="@+id/traveller_seat_number"
                 android:fontFamily="@font/semi_bold"
                 android:textColor="#050505"
@@ -223,7 +225,6 @@
                 app:layout_constraintTop_toBottomOf="@id/traveller_seat_number"
                 android:layout_margin="20dp"
                 android:paddingRight="15dp"
-                android:text="$50.00"
                 android:id="@+id/dollar"
                 android:fontFamily="@font/semi_bold"
                 android:textColor="#050505"

@@ -6,12 +6,16 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".BookingServiceFragment.BoardingPassFragment">
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="10dp"
             android:layout_gravity="center"
             android:id="@+id/boarding_pass_fragment"
             android:layout_width="match_parent"
@@ -23,6 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:src="@drawable/back"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -47,22 +52,35 @@
 
         <include layout="@layout/boarding_pass_item"
             android:id="@+id/boarding_pass_ticket"
+            app:layout_constraintTop_toBottomOf="@id/boarding_pass_fragment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_width="390dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="12dp"
             android:layout_height="560dp"
             android:layout_gravity="center">
 
         </include>
-        <ImageView
-            android:id="@+id/download_ticket"
-            android:layout_marginTop="20dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             android:layout_gravity="center"
-            android:src="@drawable/download_ticket"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+            <ImageView
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:id="@+id/download_ticket"
+                android:layout_marginBottom="15dp"
+                android:src="@drawable/download_ticket"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-        </ImageView>
-    </LinearLayout>
+            </ImageView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <!-- TODO: Update blank fragment layout -->
 
 

@@ -6,51 +6,73 @@ import java.util.*;
 
 public class FlightData {
     private static FlightData instance;
-    private Map<Integer, FlightContainer> flightContainers;
+    private Map<String, FlightContainer> flightContainers;
     private Random random;
-    private String startDate;
+    private SimpleDateFormat sdf;
 
-    private FlightData(long seed, String startDate) {
+    private FlightData(long seed) {
         flightContainers = new HashMap<>();
         random = new Random(seed);
-        this.startDate = startDate;
-        generateSampleDataForNext30Days();
+        sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
     }
 
-    public static synchronized FlightData getInstance(long seed, String startDate) {
+    public static synchronized FlightData getInstance(long seed) {
         if (instance == null) {
-            instance = new FlightData(seed, startDate);
+            instance = new FlightData(seed);
         }
         return instance;
     }
 
-    public Map<Integer, FlightContainer> getFlightContainers() {
+    public Map<String, FlightContainer> getFlightContainers() {
         return flightContainers;
     }
 
-    private void generateSampleDataForNext30Days() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        Calendar calendar = Calendar.getInstance();
+    public void generateDataForDate(String date) {
+        if (!flightContainers.containsKey(date)) {
+            Calendar calendar = Calendar.getInstance();
+            try {
+                calendar.setTime(sdf.parse(date));
+            } catch (ParseException e) {
+                e.printStackTrace();
+                return;
+            }
+            generateDataForCalendar(calendar);
+        }
+    }
+
+    public void generateDataForRange(String startDate, String endDate) {
+        Calendar startCalendar = Calendar.getInstance();
+        Calendar endCalendar = Calendar.getInstance();
 
         try {
-            calendar.setTime(sdf.parse(startDate));
+            startCalendar.setTime(sdf.parse(startDate));
+            endCalendar.setTime(sdf.parse(endDate));
         } catch (ParseException e) {
             e.printStackTrace();
             return;
         }
 
-        for (int day = 0; day < 30; day++) {
-            FlightContainer flightContainer = new FlightContainer();
-            int numberOfFlights = random.nextInt(5) + 8; // Between 8 and 12 flights
-
-            for (int i = 0; i < numberOfFlights; i++) {
-                Flight flight = generateRandomFlight(calendar);
-                flightContainer.addFlight(flight);
+        while (!startCalendar.after(endCalendar)) {
+            String date = sdf.format(startCalendar.getTime());
+            if (!flightContainers.containsKey(date)) {
+                generateDataForCalendar(startCalendar);
             }
-
-            flightContainers.put(day, flightContainer);
-            calendar.add(Calendar.DAY_OF_YEAR, 1);
+            startCalendar.add(Calendar.DAY_OF_YEAR, 1);
         }
+    }
+
+
+    private void generateDataForCalendar(Calendar calendar) {
+        String date = sdf.format(calendar.getTime());
+        FlightContainer flightContainer = new FlightContainer();
+        int numberOfFlights = random.nextInt(5) + 8; // Between 8 and 12 flights
+
+        for (int i = 0; i < numberOfFlights; i++) {
+            Flight flight = generateRandomFlight(calendar);
+            flightContainer.addFlight(flight);
+        }
+
+        flightContainers.put(date, flightContainer);
     }
 
     private Flight generateRandomFlight(Calendar calendar) {
@@ -64,7 +86,7 @@ public class FlightData {
         } while (origin.equals(destination));
 
         String flightNumber = "F" + (random.nextInt(900) + 100);
-        String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(calendar.getTime());
+        String date = sdf.format(calendar.getTime());
         String departureTime = String.format("%02d:00", random.nextInt(24));
         String arrivalTime = String.format("%02d:00", (random.nextInt(24 - Integer.parseInt(departureTime.split(":")[0])) + Integer.parseInt(departureTime.split(":")[0])) % 24);
 
@@ -114,22 +136,33 @@ public class FlightData {
 //public class Main {
 //    public static void main(String[] args) {
 //        long seed = 12345L;
+//        FlightData flightData = FlightData.getInstance(seed);
+//
+//        // Generate data for a range of dates
 //        String startDate = "2024-07-01";
-//        FlightData flightData = FlightData.getInstance(seed, startDate);
+//        String endDate = "2024-07-10";
+//        flightData.generateDataForRange(startDate, endDate);
 //
-//        FlightContainer flightContainerForDay10 = flightData.getFlightContainers().get(9); // Get flights for the 10th day from the start date
-//        if (flightContainerForDay10 != null) {
-//            List<Flight> flightsForDay10 = flightContainerForDay10.getFlights();
-//
-//            for (Flight flight : flightsForDay10) {
-//                System.out.println(flight.getFlightNumber() + " - " + flight.getOrigin() + " to " + flight.getDestination());
-//                FlightSeat[][] seats = flight.getSeats();
-//                for (FlightSeat[] row : seats) {
-//                    for (FlightSeat seat : row) {
-//                        System.out.println("Seat " + seat.getSeatNumber() + ": $" + seat.getPrice());
-//                    }
+//        // Retrieve flight data for the range of dates
+//        Calendar calendar = Calendar.getInstance();
+//        try {
+//            calendar.setTime(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(startDate));
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        while (!calendar.after(endDate)) {
+//            String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(calendar.getTime());
+//            FlightContainer flightContainer = flightData.getFlightContainers().get(date);
+//            if (flightContainer != null) {
+//                List<Flight> flights = flightContainer.getFlights();
+//                System.out.println("Flights on " + date + ":");
+//                for (Flight flight : flights) {
+//                    System.out.println(flight.getFlightNumber() + " - " + flight.getOrigin() + " to " + flight.getDestination());
 //                }
 //            }
+//            calendar.add(Calendar.DAY_OF_YEAR, 1);
 //        }
 //    }
 //}
+
+

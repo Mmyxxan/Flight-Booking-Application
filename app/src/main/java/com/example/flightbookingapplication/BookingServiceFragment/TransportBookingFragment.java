@@ -60,7 +60,7 @@ public class TransportBookingFragment extends Fragment{
         backPressedListener = listener;
     }
     private TextInputEditText origin, destination, departure_date, return_date, passenger, baby, dog, luggage;
-    int class_type = 0, transport_type = 0;
+    int class_type = 1, transport_type = 0;
     private ImageView back;
     private String dayOfWeek;
     private TextView economy, business;
@@ -193,10 +193,16 @@ public class TransportBookingFragment extends Fragment{
     public boolean validateDate() {
         String returnDateStr = return_date.getText().toString().trim();
         String departureDateStr = departure_date.getText().toString().trim();
-        if (TextUtils.isEmpty(returnDateStr) || TextUtils.isEmpty(departureDateStr)) return true;
+        if (TextUtils.isEmpty(returnDateStr) || TextUtils.isEmpty(departureDateStr)) {
+            //TODO: departureDateStr and returnDateStr, if either is empty, check if another one is after current date
+            return true;
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            LocalDate currentDate = LocalDate.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate departureDate = LocalDate.parse(departureDateStr, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             LocalDate returnDate = LocalDate.parse(returnDateStr, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            if (currentDate.isAfter(departureDate) || currentDate.isAfter(returnDate)) return false;
             return !returnDate.isBefore(departureDate);
 
         }
@@ -227,7 +233,7 @@ public class TransportBookingFragment extends Fragment{
                 if (departure_date.hasFocus()) {
                     departure_date.setText(formattedDate);
                     if (!validateDate()) {
-                        departure_date.setError("Return date must be after departure date");
+                        departure_date.setError("Departure date must be before return date and after current date");
                         departure_date.setText("");
                         departure_date.clearFocus();
                     }
@@ -242,7 +248,7 @@ public class TransportBookingFragment extends Fragment{
                 } else if (return_date.hasFocus()) {
                     return_date.setText(formattedDate);
                     if (!validateDate()) {
-                        return_date.setError("Return date must be after departure date");
+                        return_date.setError("Return date must be after departure date and current date");
                         return_date.setText("");
                         return_date.clearFocus();
                     }
@@ -363,6 +369,25 @@ public class TransportBookingFragment extends Fragment{
         return view;
     }
 
+    public boolean checkAndFillDate() {
+        boolean allFieldsFilled = true;
+        TextInputEditText[] fields = {origin, destination, departure_date, return_date, passenger, baby, dog, luggage};
+
+        for (TextInputEditText field : fields) {
+            if (TextUtils.isEmpty(field.getText().toString().trim())) {
+                field.setError("This field cannot be empty");
+                allFieldsFilled = false;
+            }
+        }
+
+//        if (!validateDate()) {
+//            return_date.setError("Return date cannot be before departure date");
+//            allFieldsFilled = false;
+//        }
+
+        return allFieldsFilled;
+    }
+
     private void validateAndSetEditTextValue(TextInputEditText origin) {
         String userInput = origin.getText().toString().trim();
 
@@ -389,11 +414,23 @@ public class TransportBookingFragment extends Fragment{
         origin.setText(userInput + " (" + Flight.abbreviated_city(userInput) + ")");
     }
 
-    private void checkAndFillDate() {
-
-    }
-
     private void navigateToFlights() {
+        if (!checkAndFillDate()) {
+            new AlertDialog.Builder(requireContext())
+                    .setTitle("Incomplete Form")
+                    .setMessage("Please fill in all fields before proceeding.")
+                    .setPositiveButton(android.R.string.ok, (dialog, which) -> dialog.dismiss())
+                    .show();
+            return;
+        }
+        if (this.transport_type != 0) {
+            new AlertDialog.Builder(requireContext())
+                    .setTitle("Unavailable Transport")
+                    .setMessage("This transport is currently unavailable.")
+                    .setPositiveButton(android.R.string.ok, (dialog, which) -> dialog.dismiss())
+                    .show();
+            return;
+        }
         String origin = this.origin.getText().toString().trim();
         String destination = this.destination.getText().toString().trim();
         String departureDate = this.departure_date.getText().toString().trim();

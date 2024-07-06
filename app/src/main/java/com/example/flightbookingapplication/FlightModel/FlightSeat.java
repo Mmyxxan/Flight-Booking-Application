@@ -8,7 +8,12 @@ public class FlightSeat implements Parcelable {
     private boolean isAvailable;
     private int seatType;
     private int price;
-
+    public String getSeatClass() {
+        if (seatType == 2) {
+            return "Economy";
+        }
+        return "Business";
+    }
     public FlightSeat(int seatNumber, int seatType, int price) {
         this.seatNumber = seatNumber;
         this.seatType = seatType;
@@ -56,8 +61,11 @@ public class FlightSeat implements Parcelable {
     public int getSeatNumber() {
         return seatNumber;
     }
-
     public void setAvailable() {
+        this.isAvailable = true;
+    }
+
+    public void setUnavailable() {
         this.isAvailable = false;
     }
 
@@ -79,5 +87,11 @@ public class FlightSeat implements Parcelable {
 
     public int getPrice() {
         return price;
+    }
+
+    public static String convertSeatNumberToSeatCode(int seatNumber) {
+        int row = (seatNumber - 1) / 4 + 1; // Calculate the row number (1-based)
+        char column = (char) ('A' + (seatNumber - 1) % 4); // Calculate the column letter (A, B, C, or D)
+        return row + String.valueOf(column);
     }
 }

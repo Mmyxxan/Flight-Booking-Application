@@ -242,7 +242,7 @@
             android:layout_margin="20dp"
             app:layout_constraintStart_toEndOf="@id/dog_text"
             android:layout_width="80dp"
-            app:startIconDrawable="@drawable/dog"
+            app:startIconDrawable="@drawable/luggage"
             android:layout_height="45dp">
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
