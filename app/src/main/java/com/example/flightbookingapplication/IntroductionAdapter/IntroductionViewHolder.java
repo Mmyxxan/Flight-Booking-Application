@@ -22,14 +22,17 @@ public class IntroductionViewHolder extends RecyclerView.ViewHolder {
         if (position == 0) {
 
             introduction_item.setImageResource(R.drawable.item1);
+            introduction_item.setEnabled(false);
         }
         else if (position == 1) {
 
             introduction_item.setImageResource(R.drawable.item2);
+            introduction_item.setEnabled(false);
         }
         else if (position == 2) {
 
             introduction_item.setImageResource(R.drawable.item3);
+            introduction_item.setEnabled(false);
 
         }
     }
