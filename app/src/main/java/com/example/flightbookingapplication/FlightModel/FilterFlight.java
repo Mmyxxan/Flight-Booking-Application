@@ -1,8 +1,13 @@
 package com.example.flightbookingapplication.FlightModel;
 
-import java.util.*;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class FilterFlight {
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
+public class FilterFlight implements Parcelable {
     public String[] options = {"Arrival time", "Departure time", "Price", "Duration"};
 
     private int classType;
@@ -19,6 +24,34 @@ public class FilterFlight {
     public FilterFlight(int classType) {
         this.classType = classType;
         this.filterOptions = new FilterOptions("06:00", "12:00", "00:00", "06:00", 0, 500, options[2]);
+    }
+
+    protected FilterFlight(Parcel in) {
+        classType = in.readInt();
+        filterOptions = in.readParcelable(FilterOptions.class.getClassLoader());
+    }
+
+    public static final Creator<FilterFlight> CREATOR = new Creator<FilterFlight>() {
+        @Override
+        public FilterFlight createFromParcel(Parcel in) {
+            return new FilterFlight(in);
+        }
+
+        @Override
+        public FilterFlight[] newArray(int size) {
+            return new FilterFlight[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(classType);
+        dest.writeParcelable(filterOptions, flags);
     }
 
     public FlightContainer filterFlights(FlightContainer flights) {
