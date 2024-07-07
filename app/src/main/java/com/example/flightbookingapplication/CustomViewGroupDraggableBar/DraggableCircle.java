@@ -100,11 +100,17 @@ public class DraggableCircle extends View {
             canvas.drawRect(listener.getCx1(), getHeight() / 2f - circleRadius / 8f, cx2, getHeight() / 2f + circleRadius / 8f, paint);
         }
         paint.setColor(circleColor);
-        if (!isDraggingCircle1) canvas.drawCircle(listener.getCx1(), cy1, circleRadius, paint);
+        if (!isDraggingCircle1) {
+            cx1 = listener.getCx1();
+            canvas.drawCircle(listener.getCx1(), cy1, circleRadius, paint);
+        }
         else {
             canvas.drawCircle(cx1, cy1, circleRadius, paint);
         }
-        if (!isDraggingCircle2) canvas.drawCircle(listener.getCx2(), cy2, circleRadius, paint);
+        if (!isDraggingCircle2) {
+            cx2 = listener.getCx2();
+            canvas.drawCircle(listener.getCx2(), cy2, circleRadius, paint);
+        }
         else {
             canvas.drawCircle(cx2, cy2, circleRadius, paint);
         }
