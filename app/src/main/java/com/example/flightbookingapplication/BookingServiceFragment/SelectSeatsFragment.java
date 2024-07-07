@@ -38,7 +38,7 @@ public class SelectSeatsFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     public interface OnFragmentBack {
         // refund all seats in seats reservation
-        void onFragmentBack();
+        void onFragmentBack(boolean backToTransportBooking);
     }
     private OnFragmentBack mListener;
     public void setOnFragmentBackListener(OnFragmentBack listener) {
@@ -96,7 +96,7 @@ public class SelectSeatsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 seatsReservation.refundAllSeats();
-                mListener.onFragmentBack();
+                mListener.onFragmentBack(false);
             }
         });
         assert userFlightInformation != null;
@@ -143,6 +143,15 @@ public class SelectSeatsFragment extends Fragment {
                         bundle.putParcelable("flight", flight);
                         bundle.putParcelable("seatsReservation", seatsReservation);
                         BoardingPassFragment boardingPassFragment = new BoardingPassFragment();
+                        boardingPassFragment.setOnBackPressedListener(new BoardingPassFragment.onBackPressedListener() {
+                            @Override
+                            public void onBackPressed() {
+//                                seatsReservation.refundAllSeats();
+                                getChildFragmentManager().beginTransaction().remove(boardingPassFragment).commit();
+                                constraintLayout.setVisibility(View.VISIBLE);
+                                mListener.onFragmentBack(true);
+                            }
+                        });
                         boardingPassFragment.setArguments(bundle);
                         getChildFragmentManager().beginTransaction().replace(R.id.select_seats_fragment_container, boardingPassFragment).commit();
                     }

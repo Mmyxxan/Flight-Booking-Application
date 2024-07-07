@@ -8,7 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.flightbookingapplication.FlightModel.FilterFlight;
 import com.example.flightbookingapplication.R;
+import com.example.flightbookingapplication.UserFlightInformation;
+import com.example.flightbookingapplication.UserInformation;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +19,15 @@ import com.example.flightbookingapplication.R;
  * create an instance of this fragment.
  */
 public class FiltersFragment extends Fragment {
+    private FilterFlight filters;
+    public interface onFragmentInteractionListener {
+        void onBackPressed();
+        void onFilterFlights(FilterFlight filters);
+    }
+    private onFragmentInteractionListener mListener;
+    public void setOnFragmentInteractionListener(onFragmentInteractionListener listener) {
+        mListener = listener;
+    }
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -52,8 +64,8 @@ public class FiltersFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            UserFlightInformation userFlightInformation = getArguments().getParcelable("userFlightInfo");
+            filters = new FilterFlight(userFlightInformation.getClassType());
         }
     }
 

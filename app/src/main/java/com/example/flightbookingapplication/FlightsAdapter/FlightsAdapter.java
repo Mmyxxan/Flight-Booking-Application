@@ -30,6 +30,9 @@ public class FlightsAdapter extends RecyclerView.Adapter<FlightsViewHolder> {
     public void setFlights(List<Flight> flights) {
         this.flights = flights;
     }
+    public List<Flight> getFlights() {
+        return flights;
+    }
 
     @NonNull
     @Override

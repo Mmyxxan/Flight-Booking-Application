@@ -195,6 +195,22 @@ public class TransportBookingFragment extends Fragment{
         String departureDateStr = departure_date.getText().toString().trim();
         if (TextUtils.isEmpty(returnDateStr) || TextUtils.isEmpty(departureDateStr)) {
             //TODO: departureDateStr and returnDateStr, if either is empty, check if another one is after current date
+            if (!TextUtils.isEmpty(departureDateStr)) {
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    LocalDate departureDate = LocalDate.parse(departureDateStr, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                    LocalDate currentDate = LocalDate.now();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    if (departureDate.isBefore(currentDate)) return false;
+                }
+            }
+            if (!TextUtils.isEmpty(returnDateStr)) {
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    LocalDate returnDate = LocalDate.parse(returnDateStr, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                    LocalDate currentDate = LocalDate.now();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    if (returnDate.isBefore(currentDate)) return false;
+                }
+            }
             return true;
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -259,8 +275,12 @@ public class TransportBookingFragment extends Fragment{
                 }
             }
         };
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH) + 1;
 
-        datePickerDialog = new DatePickerDialog(requireContext(), dateSetListener, 2024, 6, 3);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(), dateSetListener, year, month, day);
         departure_date.setOnFocusChangeListener((departure_date, hasFocus) -> {
                                               if (hasFocus) {
                                                   datePickerDialog.show();

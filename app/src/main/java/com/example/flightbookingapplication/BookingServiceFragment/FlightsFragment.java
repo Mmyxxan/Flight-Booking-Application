@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,8 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.flightbookingapplication.FlightModel.FilterFlight;
 import com.example.flightbookingapplication.FlightModel.Flight;
 import com.example.flightbookingapplication.FlightModel.FlightContainer;
 import com.example.flightbookingapplication.FlightModel.FlightData;
@@ -164,9 +167,13 @@ public class FlightsFragment extends Fragment {
                 hideViews();
                 selectSeatsFragment.setOnFragmentBackListener(new SelectSeatsFragment.OnFragmentBack() {
                     @Override
-                    public void onFragmentBack() {
+                    public void onFragmentBack(boolean backToTransportBooking) {
                         getChildFragmentManager().beginTransaction().remove(selectSeatsFragment).commit();
                         showViews();
+                        if (backToTransportBooking) {
+                            backListener.onBackPressed();
+                        }
+                        else return;
                     }
                 });
                 getChildFragmentManager().beginTransaction().replace(R.id.flights_fragment_container, selectSeatsFragment).commit();
@@ -174,6 +181,39 @@ public class FlightsFragment extends Fragment {
         });
         flightsList.setAdapter(flightsAdapter);
         flightsList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        ImageView filter = view.findViewById(R.id.filter);
+
+        filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                hideViews();
+                FiltersFragment filtersFragment = new FiltersFragment();
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("userFlightInfo", userFlightInformation);
+                filtersFragment.setArguments(bundle);
+                filtersFragment.setOnFragmentInteractionListener(new FiltersFragment.onFragmentInteractionListener() {
+                    @Override
+                    public void onBackPressed() {
+                        getChildFragmentManager().beginTransaction().remove(filtersFragment).commit();
+                        showViews();
+                    }
+
+                    @Override
+                    public void onFilterFlights(FilterFlight filters) {
+                        onBackPressed();
+                        // TODO: filter flights here and notify dataset changed
+                        FlightContainer flightContainer = new FlightContainer();
+                        for (Flight flight : flightsAdapter.getFlights()) {
+                            flightContainer.addFlight(flight);
+                        }
+                        flightContainer = filters.filterFlights(flightContainer);
+                        flightsAdapter.setFlights(flightContainer.getFlights());
+                        flightsAdapter.notifyDataSetChanged();
+                        numFlights.setText(flightsAdapter.getItemCount() + " flights available " + userFlightInformation.getOrigin() + " to " + userFlightInformation.getDestination());
+                    }
+                });
+            }
+        });
         return view;
     }
 

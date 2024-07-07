@@ -45,6 +45,13 @@ import java.io.OutputStream;
  * create an instance of this fragment.
  */
 public class BoardingPassFragment extends Fragment {
+    public interface onBackPressedListener {
+        void onBackPressed();
+    }
+    private onBackPressedListener onBackPressedListener;
+    public void setOnBackPressedListener(onBackPressedListener listener) {
+        this.onBackPressedListener = listener;
+    }
     private UserFlightInformation userFlightInformation;
     private Flight flight;
     private SeatsReservation seatsReservation;
@@ -143,6 +150,13 @@ public class BoardingPassFragment extends Fragment {
 
             }
         });
+        ImageView back_button = view.findViewById(R.id.back_button);
+        back_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressedListener.onBackPressed();
+            }
+        });
         TextView tv_from_city = view.findViewById(R.id.tv_from_city);
         TextView tv_to_city = view.findViewById(R.id.tv_to_city);
         TextView tv_date = view.findViewById(R.id.tv_date);
@@ -160,6 +174,11 @@ public class BoardingPassFragment extends Fragment {
             adult.setText(userFlightInformation.getPassenger() + " Adult");
         } else {
             adult.setText(userFlightInformation.getPassenger() + " Adults");
+        }
+        if (Integer.parseInt(userFlightInformation.getBaby()) == 1) {
+            adult.append(", " + userFlightInformation.getBaby() + " Child");
+        } else if (Integer.parseInt(userFlightInformation.getBaby()) > 1) {
+            adult.append(", " + userFlightInformation.getBaby() + " Children");
         }
         ticket_code.setText(flight.getFlightNumber() + "-1");
         for (int i = 0; i < seatsReservation.getReservationSeats().size(); i++) {

@@ -6,7 +6,9 @@ import android.os.Parcelable;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -20,6 +22,37 @@ public class Flight implements Parcelable {
     public String arrival_date;
     public String arrival_time;
     private FlightSeat[][] seats;
+    public String getDuration() {
+        // Ensure compatibility with devices running Android O and above
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            LocalDate departureDate = LocalDate.parse(departure_date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            LocalTime departureTime = LocalTime.parse(departure_time, DateTimeFormatter.ofPattern("HH:mm"));
+            LocalDate arrivalDate = LocalDate.parse(arrival_date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            LocalTime arrivalTime = LocalTime.parse(arrival_time, DateTimeFormatter.ofPattern("HH:mm"));
+
+            // Combine date and time into LocalDateTime
+            LocalDateTime departureDateTime = LocalDateTime.of(departureDate, departureTime);
+            LocalDateTime arrivalDateTime = LocalDateTime.of(arrivalDate, arrivalTime);
+
+            // Calculate the duration between the two LocalDateTime instances
+            Duration duration = Duration.between(departureDateTime, arrivalDateTime);
+
+            // Convert the duration to hours and minutes
+            long hours = duration.toHours();
+            long minutes = duration.toMinutes() % 60;
+
+            // Return the duration as a formatted string
+            return String.format("%d hours %d minutes", hours, minutes);
+        } else {
+            // For devices running on Android versions below O, handle appropriately
+            // You can either throw an exception or use an alternative method to calculate the duration
+            throw new UnsupportedOperationException("This method requires Android O or above");
+        }
+    }
+
+    public String getArrivalTime() {
+        return arrival_time;
+    }
     public String getDepartureTime() {
         return departure_time;
 
