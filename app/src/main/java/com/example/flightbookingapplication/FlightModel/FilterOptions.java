@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class FilterOptions implements Parcelable {
+    public static String[] options = {"Arrival time", "Departure time", "Price", "Lowest fare", "Duration"};
     private String departureStartTime;
     private String departureEndTime;
     private String arrivalStartTime;

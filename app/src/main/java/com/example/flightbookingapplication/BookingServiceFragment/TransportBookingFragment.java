@@ -456,6 +456,15 @@ public class TransportBookingFragment extends Fragment{
         String departureDate = this.departure_date.getText().toString().trim();
         String returnDate = this.return_date.getText().toString().trim();
         String passenger = this.passenger.getText().toString().trim();
+        if (Integer.parseInt(passenger) == 0) {
+            // show alert dialog
+            new AlertDialog.Builder(requireContext())
+                    .setTitle("Invalid Passenger!")
+                    .setMessage("Please enter a valid number of passengers.")
+                    .setPositiveButton(android.R.string.ok, (dialog, which) -> dialog.dismiss())
+                    .show();
+            return;
+        }
         String baby = this.baby.getText().toString().trim();
         String dog = this.dog.getText().toString().trim();
         String luggage = this.luggage.getText().toString().trim();

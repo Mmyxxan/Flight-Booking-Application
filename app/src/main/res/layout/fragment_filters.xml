@@ -127,7 +127,7 @@
             <com.example.flightbookingapplication.CustomTextInputLayout.CustomTextInputLayout
                 android:layout_width="160dp"
                 android:layout_height="60dp"
-                android:id="@+id/departure_layout"
+                android:id="@+id/min_price_layout"
                 app:layout_constraintTop_toBottomOf="@+id/price_circle"
                 android:layout_marginEnd="10dp"
                 android:layout_marginTop="20dp"
@@ -135,10 +135,11 @@
                 app:endIconTint="@null"
                 app:endIconDrawable="@null">
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/departure"
+                    android:id="@+id/min_price"
                     android:hint="From"
                     style="@style/CustomEditText"
-                    android:text="$50"
+                    android:inputType="number"
+                    android:text="125"
                     android:fontFamily="@font/edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -147,7 +148,7 @@
             <com.example.flightbookingapplication.CustomTextInputLayout.CustomTextInputLayout
                 android:layout_width="160dp"
                 android:layout_height="60dp"
-                android:id="@+id/return_layout"
+                android:id="@+id/max_price_layout"
                 app:layout_constraintTop_toBottomOf="@+id/price_circle"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
@@ -155,10 +156,11 @@
                 app:endIconTint="@null"
                 app:endIconDrawable="@null">
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/return_text"
-                    android:text="$250"
+                    android:id="@+id/max_price"
+                    android:text="375"
                     android:fontFamily="@font/edit_text"
                     android:hint="To"
+                    android:inputType="number"
                     style="@style/CustomEditText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">

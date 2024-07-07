@@ -8,7 +8,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class FilterFlight implements Parcelable {
-    public String[] options = {"Arrival time", "Departure time", "Price", "Duration"};
+    public String[] options = {"Arrival time", "Departure time", "Price", "Lowest fare", "Duration"};
 
     private int classType;
     private FilterOptions filterOptions;
@@ -20,10 +20,13 @@ public class FilterFlight implements Parcelable {
     public void setFilterOptions(FilterOptions filterOptions) {
         this.filterOptions = filterOptions;
     }
+    public void reset() {
+        this.filterOptions = new FilterOptions("00:00", "23:59", "00:00", "23:59", 0, 500, options[2]);
+    }
 
     public FilterFlight(int classType) {
         this.classType = classType;
-        this.filterOptions = new FilterOptions("06:00", "12:00", "00:00", "06:00", 0, 500, options[2]);
+        this.filterOptions = new FilterOptions("00:00", "23:59", "00:00", "23:59", 0, 500, options[2]);
     }
 
     protected FilterFlight(Parcel in) {
@@ -56,6 +59,7 @@ public class FilterFlight implements Parcelable {
 
     public FlightContainer filterFlights(FlightContainer flights) {
         FlightContainer filteredFlights = new FlightContainer();
+        if (flights == null) return filteredFlights;
 
         // Filter by departure time
         filteredFlights = filterByDepartureTime(flights, filterOptions.getDepartureStartTime(), filterOptions.getDepartureEndTime());

@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.flightbookingapplication.FlightModel.FilterFlight;
+import com.example.flightbookingapplication.FlightModel.FilterOptions;
 import com.example.flightbookingapplication.FlightModel.Flight;
 import com.example.flightbookingapplication.FlightModel.FlightContainer;
 import com.example.flightbookingapplication.FlightModel.FlightData;
@@ -29,6 +31,7 @@ import com.example.flightbookingapplication.UserFlightInformation;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -38,6 +41,8 @@ import java.util.Locale;
  * create an instance of this fragment.
  */
 public class FlightsFragment extends Fragment {
+    private FilterOptions filterOptions = null;
+    private FilterFlight filtersForFlight = null;
     ConstraintLayout mainLayout;
     private RecyclerView calendarList, flightsList;
     private UserFlightInformation userFlightInformation;
@@ -136,18 +141,25 @@ public class FlightsFragment extends Fragment {
         calendarAdapter.setOnItemSelectedListener(new CalendarAdapter.OnItemSelectedListener() {
             @Override
             public void onItemSelected(int position) {
+                Log.d("date", String.valueOf(position));
                 String startDate = userFlightInformation.getDepartureDate();
+                Log.d("date", startDate);
                 Calendar calendar = Calendar.getInstance();
-                calendar.add(Calendar.DAY_OF_YEAR, position);
                 try {
                     calendar.setTime(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(startDate));
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+                calendar.add(Calendar.DAY_OF_YEAR, position);
+//                Date newDate = calendar.getTime();
 
+                // Convert the new date back to a String
+//                startDate = new SimpleDateFormat("yyyy-MM-dd").format(newDate);
                 String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(calendar.getTime());
+                Log.d("date", date);
                 flightData.generateDataForDate(date);
-                FlightContainer flightContainer = flightData.getFlightContainers().get(date);
+                FlightContainer flightContainer = flightData.getFlightContainers().get(date).filterFlights(userFlightInformation.getOrigin(), userFlightInformation.getDestination());
+                flightContainer = filtersForFlight.filterFlights(flightContainer);
                 List<Flight> flights = flightContainer.getFlights();
                 flightsAdapter.setFlights(flights);
                 flightsAdapter.notifyDataSetChanged();
@@ -190,6 +202,7 @@ public class FlightsFragment extends Fragment {
                 FiltersFragment filtersFragment = new FiltersFragment();
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("userFlightInfo", userFlightInformation);
+                bundle.putParcelable("filterOptions", filterOptions);
                 filtersFragment.setArguments(bundle);
                 filtersFragment.setOnFragmentInteractionListener(new FiltersFragment.onFragmentInteractionListener() {
                     @Override
@@ -201,17 +214,39 @@ public class FlightsFragment extends Fragment {
                     @Override
                     public void onFilterFlights(FilterFlight filters) {
                         onBackPressed();
+                        filterOptions = filters.getFilterOptions();
+                        filtersForFlight = filters;
                         // TODO: filter flights here and notify dataset changed
-                        FlightContainer flightContainer = new FlightContainer();
-                        for (Flight flight : flightsAdapter.getFlights()) {
-                            flightContainer.addFlight(flight);
+                        FlightContainer flightContainer = null;
+                        Log.d("date", String.valueOf(calendarAdapter.getCurrentPosition()));
+                        String startDate = userFlightInformation.getDepartureDate();
+                        Log.d("date", startDate);
+                        Calendar calendar = Calendar.getInstance();
+                        try {
+                            calendar.setTime(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(startDate));
+                        } catch (ParseException e) {
+                            e.printStackTrace();
                         }
+                        calendar.add(Calendar.DAY_OF_YEAR, calendarAdapter.getCurrentPosition());
+//                Date newDate = calendar.getTime();
+
+                        // Convert the new date back to a String
+//                startDate = new SimpleDateFormat("yyyy-MM-dd").format(newDate);
+                        String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(calendar.getTime());
+                        Log.d("date", date);
+                        flightData.generateDataForDate(date);
+                        flightContainer = flightData.getFlightContainers().get(date).filterFlights(userFlightInformation.getOrigin(), userFlightInformation.getDestination());
+//                        List<Flight> flights = flightContainer.filterFlights(userFlightInformation.getOrigin(), userFlightInformation.getDestination()).getFlights();
+//                        for (Flight flight : flightsAdapter.getFlights()) {
+//                            flightContainer.addFlight(flight);
+//                        }
                         flightContainer = filters.filterFlights(flightContainer);
                         flightsAdapter.setFlights(flightContainer.getFlights());
                         flightsAdapter.notifyDataSetChanged();
                         numFlights.setText(flightsAdapter.getItemCount() + " flights available " + userFlightInformation.getOrigin() + " to " + userFlightInformation.getDestination());
                     }
                 });
+                getChildFragmentManager().beginTransaction().replace(R.id.flights_fragment_container, filtersFragment).commit();
             }
         });
         return view;

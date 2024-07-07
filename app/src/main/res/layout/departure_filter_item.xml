@@ -11,7 +11,7 @@
         android:padding="10dp"
         android:text="12AM - 06AM"
         android:id="@+id/hour_interval"
-        style="@style/SelectedFilter"
+        style="@style/UnselectedFilter"
         android:fontFamily="@font/medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
