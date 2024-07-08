@@ -153,7 +153,19 @@ public class BookingFragment extends Fragment implements BookingViewHolder.OnIte
 //        SnapHelper snapHelper = new LinearSnapHelper();
         booking_list.setAdapter(new BookingAdapter(this));
         booking_list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        booking_list.scrollToPosition(mParam3);
+        if (mParam3 != -1) booking_list.scrollToPosition(mParam3);
+        else {
+            hideViews();
+            TransportBookingFragment transportBookingFragment = new TransportBookingFragment();
+            transportBookingFragment.setOnBackButtonPressedListener(new TransportBookingFragment.OnBacKPressed() {
+                @Override
+                public void onBackButtonPressed() {
+                    getChildFragmentManager().popBackStack();
+                    showViews();
+                }
+            });
+            getChildFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.booking_fragment, transportBookingFragment).commit();
+        }
         booking_nav_bar = view.findViewById(R.id.booking_nav_bar);
 //        snapHelper.attachToRecyclerView(booking_list);
         return view;
