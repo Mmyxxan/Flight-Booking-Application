@@ -168,8 +168,8 @@ public class HomeActivity extends AppCompatActivity implements HomeFragment.onFr
         setBottomIconDefault();
         currentPosition = 1;
         booking.setImageResource(R.drawable.active_tab1);
-//        getSupportFragmentManager().beginTransaction().replace(frameLayout.getId(), BookingFragment.newInstance("", "", 2)).commit();
-        getSupportFragmentManager().beginTransaction().replace(frameLayout.getId(), BookingFragment.newInstance("", "", -1)).commit();
+        getSupportFragmentManager().beginTransaction().replace(frameLayout.getId(), BookingFragment.newInstance("", "", 2)).commit();
+//        getSupportFragmentManager().beginTransaction().replace(frameLayout.getId(), BookingFragment.newInstance("", "", -1)).commit();
     }
 
     @Override

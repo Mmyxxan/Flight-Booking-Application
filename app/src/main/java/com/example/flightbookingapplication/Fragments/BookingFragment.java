@@ -154,8 +154,8 @@ public class BookingFragment extends Fragment implements BookingViewHolder.OnIte
         booking_list.setAdapter(new BookingAdapter(this));
         booking_list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         booking_nav_bar = view.findViewById(R.id.booking_nav_bar);
-        if (mParam3 != -1) booking_list.scrollToPosition(mParam3);
-        else {
+        booking_list.scrollToPosition(mParam3);
+        if (mParam3 == 2)  {
             hideViews();
             TransportBookingFragment transportBookingFragment = new TransportBookingFragment();
             transportBookingFragment.setOnBackButtonPressedListener(new TransportBookingFragment.OnBacKPressed() {
