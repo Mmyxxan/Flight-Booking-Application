@@ -153,6 +153,7 @@ public class BookingFragment extends Fragment implements BookingViewHolder.OnIte
 //        SnapHelper snapHelper = new LinearSnapHelper();
         booking_list.setAdapter(new BookingAdapter(this));
         booking_list.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        booking_nav_bar = view.findViewById(R.id.booking_nav_bar);
         if (mParam3 != -1) booking_list.scrollToPosition(mParam3);
         else {
             hideViews();
@@ -166,7 +167,6 @@ public class BookingFragment extends Fragment implements BookingViewHolder.OnIte
             });
             getChildFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.booking_fragment, transportBookingFragment).commit();
         }
-        booking_nav_bar = view.findViewById(R.id.booking_nav_bar);
 //        snapHelper.attachToRecyclerView(booking_list);
         return view;
     }
