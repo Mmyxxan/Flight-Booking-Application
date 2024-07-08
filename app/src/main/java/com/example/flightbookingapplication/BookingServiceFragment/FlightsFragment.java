@@ -159,7 +159,7 @@ public class FlightsFragment extends Fragment {
                 Log.d("date", date);
                 flightData.generateDataForDate(date);
                 FlightContainer flightContainer = flightData.getFlightContainers().get(date).filterFlights(userFlightInformation.getOrigin(), userFlightInformation.getDestination());
-                flightContainer = filtersForFlight.filterFlights(flightContainer);
+                if (filtersForFlight != null) flightContainer = filtersForFlight.filterFlights(flightContainer);
                 List<Flight> flights = flightContainer.getFlights();
                 flightsAdapter.setFlights(flights);
                 flightsAdapter.notifyDataSetChanged();
