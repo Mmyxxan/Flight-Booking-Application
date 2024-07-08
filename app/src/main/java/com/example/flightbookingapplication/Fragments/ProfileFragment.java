@@ -2,6 +2,7 @@ package com.example.flightbookingapplication.Fragments;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -148,7 +149,30 @@ public class ProfileFragment extends Fragment {
 
         avatar = main_view.findViewById(R.id.avatar);
         setAvatar();
-
+        main_view.findViewById(R.id.payment).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDevelopedFunctionNotifications(main_view.findViewById(R.id.payment));
+            }
+        });
+        main_view.findViewById(R.id.saved).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDevelopedFunctionNotifications(main_view.findViewById(R.id.saved));
+            }
+        });
+        main_view.findViewById(R.id.booking_history).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDevelopedFunctionNotifications(main_view.findViewById(R.id.booking_history));
+            }
+        });
+        main_view.findViewById(R.id.setting).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDevelopedFunctionNotifications(main_view.findViewById(R.id.setting));
+            }
+        });
         main_view.findViewById(R.id.personal).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -190,5 +214,12 @@ public class ProfileFragment extends Fragment {
             }
         });
         return main_view;
+    }
+    private void showDevelopedFunctionNotifications(View view) {
+        new AlertDialog.Builder(view.getContext())
+                .setTitle("Coming Soon!")
+                .setMessage("This function will soon be developed.")
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> dialog.dismiss())
+                .show();
     }
 }
